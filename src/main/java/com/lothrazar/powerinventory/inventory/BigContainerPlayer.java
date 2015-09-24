@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
+import com.lothrazar.powerinventory.standalone.ContainerContent;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
@@ -33,24 +34,10 @@ public class BigContainerPlayer extends ContainerPlayer
 	public BigInventoryPlayer invo;
     public boolean isLocalWorld;
 
-	final int padding = 6;
 	//these get used here for actual slot, and in GUI for texture
     //ender pearl is in the far bottom right corner, and the others move left relative to this
 
-	public final int pearlX = 80; 
-	public final int pearlY = 8; 
-	public final int compassX = pearlX;
-	public final int compassY = pearlY + Const.square;
-	public final int clockX = pearlX;
-	public final int clockY = pearlY + 2*Const.square;
-	public final int echestX = pearlX;
-	public final int echestY = pearlY + 3*Const.square;
 
-	public final int bottleX = Const.texture_width - Const.square - padding - 1;
-	public final int bottleY = 20 + 2 * Const.square;
-
-	public final int uncraftX = bottleX;
-	public final int uncraftY = bottleY - 24;
 	
 //store slot numbers  (not indexes) as we go. so that transferStack.. is actually readable
 	 
@@ -149,22 +136,22 @@ public class BigContainerPlayer extends ContainerPlayer
         S_MAIN_END = this.inventorySlots.size() - 1;
         
         S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, pearlX, pearlY));
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, ContainerContent.pearlX, ContainerContent.pearlY));
 
         S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY)); 
+        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, ContainerContent.echestX, ContainerContent.echestY)); 
 
         S_CLOCK =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, clockX, clockY)); 
+        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, ContainerContent.clockX, ContainerContent.clockY)); 
 
         S_COMPASS =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, compassX, compassY)); 
+        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, ContainerContent.compassX, ContainerContent.compassY)); 
         
         S_BOTTLE =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, bottleX, bottleY)); 
+        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, ContainerContent.bottleX, ContainerContent.bottleY)); 
         
         S_UNCRAFT =  this.inventorySlots.size() ;//TODO: should it work like crafting window and dump contents
-        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, uncraftX, uncraftY)); 
+        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, ContainerContent.uncraftX, ContainerContent.uncraftY)); 
         
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = playerInventory; 

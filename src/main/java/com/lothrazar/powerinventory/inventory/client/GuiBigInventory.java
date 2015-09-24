@@ -3,6 +3,8 @@ package com.lothrazar.powerinventory.inventory.client;
 import com.lothrazar.powerinventory.Const; 
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
+import com.lothrazar.powerinventory.standalone.ContainerContent;
+import com.lothrazar.powerinventory.standalone.IOverpoweredGui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -21,20 +23,20 @@ import org.lwjgl.opengl.GL11;
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
-public class GuiBigInventory extends GuiInventory
+public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 {
 	private BigContainerPlayer container;
 
-
-	GuiButton btnEnder;
-	GuiButton btnExp;
-	GuiButton btnUncraft;
+	
+	
+	EntityPlayer thePlayer;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
 		this.xSize = Const.texture_width;
 		this.ySize = Const.texture_height;
+		thePlayer = player;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -43,8 +45,11 @@ public class GuiBigInventory extends GuiInventory
     { 
 		super.initGui();
 		
+		GuiInventory self = this;
+		
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
+			//ContainerContent.setupGui(this, this.buttonList, this.guiLeft, this.guiTop);
 			final int height = 20;
 			int width = 26;
 			final int widthlrg = 58;
@@ -54,38 +59,38 @@ public class GuiBigInventory extends GuiInventory
 			 
 			if(ModConfig.showMergeDeposit)
 			{
-				this.buttonList.add(new GuiButtonDump(button_id++,
-						this.guiLeft + this.xSize - widthlrg - padding, 
-						this.guiTop + padding,
+				buttonList.add(new GuiButtonDump(button_id++,
+						guiLeft + xSize - widthlrg - padding, 
+						guiTop + padding,
 						widthlrg,height));
 	
-				this.buttonList.add(new GuiButtonFilter(button_id++,
-						this.guiLeft + this.xSize - widthlrg - 2*padding - widthlrg, 
-						this.guiTop + padding,
+				buttonList.add(new GuiButtonFilter(button_id++,
+						guiLeft + xSize - widthlrg - 2*padding - widthlrg, 
+						guiTop + padding,
 						widthlrg,height));
 			}
 			 
 			btnUncraft = new GuiButtonUnc(button_id++, 
-					this.guiLeft + container.uncraftX - 51 ,
-					this.guiTop + container.uncraftY - 1,
+					guiLeft + ContainerContent.uncraftX - 51 ,
+					guiTop + ContainerContent.uncraftY - 1,
 					width + 20,height,StatCollector.translateToLocal("button.unc"));
-			this.buttonList.add(btnUncraft); 
+			buttonList.add(btnUncraft); 
 			btnUncraft.enabled = false;// turn it on based on ender chest present or not
 			btnUncraft.visible = btnUncraft.enabled;
 
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					this.guiLeft + container.echestX + 19, 
-					this.guiTop + container.echestY - 1,
+					guiLeft + ContainerContent.echestX + 19, 
+					guiTop + ContainerContent.echestY - 1,
 					12,height, "I",Const.INV_ENDER); 
-			this.buttonList.add(btnEnder); 
+			buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 			btnEnder.visible = btnEnder.enabled;
 			
 			btnExp = new GuiButtonExp(button_id++, 
-					this.guiLeft + container.bottleX - width - padding+1, 
-					this.guiTop + container.bottleY-2,
+					guiLeft + ContainerContent.bottleX - width - padding+1, 
+					guiTop + ContainerContent.bottleY-2,
 					width,height,StatCollector.translateToLocal("button.exp"));
-			this.buttonList.add(btnExp);
+			buttonList.add(btnExp);
 			btnExp.enabled = false;
 			btnExp.visible = btnExp.enabled;
 		 
@@ -93,33 +98,33 @@ public class GuiBigInventory extends GuiInventory
 			{  
 				width = 18;
 				int x_spacing = width + padding/2;
-				int x = guiLeft + this.xSize - 5*x_spacing - padding+1;
-				int y = guiTop + this.ySize - height - padding;
+				int x = guiLeft + xSize - 5*x_spacing - padding+1;
+				int y = guiTop + ySize - height - padding;
 				 
 				GuiButton btn;
-				 
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<",false);
+				 //was this.mc.thePlayer
+				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<",false);
 				this.buttonList.add(btn);
 
 				x += x_spacing;
 			 
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFT,"<",false);
-				this.buttonList.add(btn);
+				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFT,"<",false);
+				buttonList.add(btn);
 
 				x += x_spacing;
 			 
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"),false);
-				this.buttonList.add(btn);
+				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"),false);
+				buttonList.add(btn);
 				
 				x += x_spacing;
 
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHT,">",false);
-				this.buttonList.add(btn);
+				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHT,">",false);
+				buttonList.add(btn);
 				  
 				x += x_spacing;
 				
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>",false);
-				this.buttonList.add(btn);
+				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>",false);
+				buttonList.add(btn);
 			}
 		}
     }
@@ -133,7 +138,7 @@ public class GuiBigInventory extends GuiInventory
 			btnEnder.enabled = false;
 			btnEnder.visible = btnEnder.enabled;
  
-			drawTextureSimple("textures/items/empty_enderchest.png",container.echestX, container.echestY,s,s); 
+			drawTextureSimple("textures/items/empty_enderchest.png",ContainerContent.echestX, ContainerContent.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -158,7 +163,7 @@ public class GuiBigInventory extends GuiInventory
 			btnExp.enabled = false;
 			btnExp.visible = btnExp.enabled;
   
-			drawTextureSimple("textures/items/empty_bottle.png",container.bottleX, container.bottleY,s,s); 
+			drawTextureSimple("textures/items/empty_bottle.png",ContainerContent.bottleX, ContainerContent.bottleY,s,s); 
 		}
 		else 
 		{ 
@@ -168,17 +173,17 @@ public class GuiBigInventory extends GuiInventory
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_enderpearl.png",container.pearlX, container.pearlY,s,s);
+			drawTextureSimple("textures/items/empty_enderpearl.png",ContainerContent.pearlX, ContainerContent.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			drawTextureSimple("textures/items/empty_compass.png",container.compassX, container.compassY,s,s);
+			drawTextureSimple("textures/items/empty_compass.png",ContainerContent.compassX, ContainerContent.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_clock.png",container.clockX, container.clockY,s,s);
+			drawTextureSimple("textures/items/empty_clock.png",ContainerContent.clockX, ContainerContent.clockY,s,s);
 		}
 	}
 	 
@@ -186,28 +191,9 @@ public class GuiBigInventory extends GuiInventory
 	{
 		//wrapper for drawTexturedQuadFit
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		drawTexturedQuadFit(x,y,width,height,0);
+		ContainerContent.drawTexturedQuadFit(x,y,width,height,0);
 	}
-	
-	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
-	{
-		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
-		//so this one actually works
-		//THANKS hydroflame  ON FORUMS 
-		//http://www.minecraftforge.net/forum/index.php/topic,11229.msg57594.html#msg57594
-		
-		Tessellator tessellator = Tessellator.instance;
-  
-		//WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		tessellator.startDrawingQuads();
-        
-		tessellator.addVertexWithUV(x + 0, y + height, zLevel, 0,1);
-		tessellator.addVertexWithUV(x + width, y + height, zLevel, 1, 1);
-		tessellator.addVertexWithUV(x + width, y + 0, zLevel, 1,0);
-		tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
-        tessellator.draw();
-	}
-	
+ 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
@@ -215,7 +201,7 @@ public class GuiBigInventory extends GuiInventory
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
-        drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
+        ContainerContent.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	func_147046_a(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
@@ -242,5 +228,46 @@ public class GuiBigInventory extends GuiInventory
 			this.drawString(this.fontRendererObj, "" + show, s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
 		}*/
 
+	}
+
+
+
+	private GuiButton btnEnder;
+	private GuiButton btnExp;
+	private GuiButton btnUncraft;
+	@Override
+	public GuiButton btnEnder()
+	{
+		return btnEnder;
+	}
+
+	@Override
+	public void btnEnder(GuiButton b)
+	{
+		btnExp=b;
+	}
+
+	@Override
+	public GuiButton btnExp()
+	{
+		return btnExp;
+	}
+
+	@Override
+	public void btnExp(GuiButton b)
+	{
+		btnExp=b;
+	}
+
+	@Override
+	public GuiButton btnUncraft()
+	{
+		return btnUncraft;
+	}
+
+	@Override
+	public void btnUncraft(GuiButton b)
+	{
+		btnUncraft=b;
 	}
 }
