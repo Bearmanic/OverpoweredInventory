@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.standalone.InventoryCustomPlayer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +19,10 @@ import net.minecraftforge.common.IExtendedEntityProperties;
  */
 public class InventoryPersistProperty implements IExtendedEntityProperties
 {
+
+public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
+	
+	
 	public static final String ID = "II_BIG_INVO";
 	
 	EntityPlayer player;
@@ -84,14 +89,17 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	}
 	
 	@Override
-	public void loadNBTData(NBTTagCompound compound)
+	public void loadNBTData(NBTTagCompound properties)
 	{
+		this.inventory.readFromNBT(properties);
+		
+		
 		if(!(player.inventory instanceof BigInventoryPlayer))
 		{
 			player.inventory = new BigInventoryPlayer(player);
 			player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
 			player.openContainer = player.inventoryContainer;
-			((BigInventoryPlayer)player.inventory).readFromNBT(compound.getTagList(Const.NBT_INVENTORY, 10));
+			((BigInventoryPlayer)player.inventory).readFromNBT(properties.getTagList(Const.NBT_INVENTORY, 10));
 		}
 	}
 	
@@ -110,5 +118,9 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	}
 
 	@Override
-	public void saveNBTData(NBTTagCompound compound) {}
+	public void saveNBTData(NBTTagCompound properties) 
+	{
+		this.inventory.writeToNBT(properties);
+		
+	}
 }

@@ -17,6 +17,7 @@ import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket; 
 import com.lothrazar.powerinventory.proxy.UncButtonPacket;
+import com.lothrazar.powerinventory.standalone.GuiHandler;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -85,6 +86,23 @@ public class ModInv
 		MinecraftForge.EVENT_BUS.register(instance);
 		FMLCommonHandler.instance().bus().register(instance);
     }
+
+    @EventHandler
+    public void init(FMLInitializationEvent event)
+    {
+    	//.instance()
+    	 NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+    	
+    	 //then when you need to 
+    	 //player.openGui(TutorialMain.instance, guiID, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+    	 
+    	if(ModConfig.enderPearl64)
+    	{
+    		Items.ender_pearl.setMaxStackSize(64);
+    	}
+    }
+    
+    
     boolean sentVersionMessage = false;//only send it once
     VersionChecker versionChecker ;
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
@@ -172,14 +190,6 @@ public class ModInv
 		if(config.hasChanged()){config.save();}
 	}
     
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-    	if(ModConfig.enderPearl64)
-    	{
-    		Items.ender_pearl.setMaxStackSize(64);
-    	}
-    }
     
     
 }
