@@ -16,4 +16,8 @@ public interface IOverpoweredGui
 	
 	public GuiButton btnUncraft();
 	public void btnUncraft(GuiButton b);
+	
+	//getters for privates
+	public int guiLeft();
+	public int guiTop();
 }

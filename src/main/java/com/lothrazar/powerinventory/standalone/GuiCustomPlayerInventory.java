@@ -16,18 +16,30 @@ public class GuiCustomPlayerInventory extends GuiContainer implements IOverpower
 {
 	ResourceLocation res = new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE);
 	private final InventoryCustomPlayer inventory;
-	//private final EntityPlayer thePlayer;
+	private final EntityPlayer thePlayer;
 	
 	public GuiCustomPlayerInventory(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
 		inventory = inventoryCustom;
-		//thePlayer = player;
+		thePlayer = player;
 		
 		this.xSize = Const.texture_width;
 		this.ySize = Const.texture_height;
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void initGui()
+    { 
+		super.initGui();
+		  
+		 
+		ContainerContent.setupGui(this, this.thePlayer,this.buttonList);
+		 
+    }
+	
 	public void drawScreen(int par1, int par2, float par3)
 	{
 		super.drawScreen(par1, par2, par3);
@@ -87,5 +99,15 @@ public class GuiCustomPlayerInventory extends GuiContainer implements IOverpower
 	public void btnUncraft(GuiButton b)
 	{
 		btnUncraft=b;
+	}
+	@Override
+	public int guiLeft()
+	{
+		return this.guiLeft;
+	}
+	@Override
+	public int guiTop()
+	{
+		return this.guiTop;
 	}
 }

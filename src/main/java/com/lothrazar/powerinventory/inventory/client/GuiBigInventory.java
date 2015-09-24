@@ -44,88 +44,11 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 	public void initGui()
     { 
 		super.initGui();
-		
-		GuiInventory self = this;
-		
+		  
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
-			//ContainerContent.setupGui(this, this.buttonList, this.guiLeft, this.guiTop);
-			final int height = 20;
-			int width = 26;
-			final int widthlrg = 58;
-			final int padding = 6;
-			//final int tiny = 12;
-			int button_id = 99;
-			 
-			if(ModConfig.showMergeDeposit)
-			{
-				buttonList.add(new GuiButtonDump(button_id++,
-						guiLeft + xSize - widthlrg - padding, 
-						guiTop + padding,
-						widthlrg,height));
-	
-				buttonList.add(new GuiButtonFilter(button_id++,
-						guiLeft + xSize - widthlrg - 2*padding - widthlrg, 
-						guiTop + padding,
-						widthlrg,height));
-			}
-			 
-			btnUncraft = new GuiButtonUnc(button_id++, 
-					guiLeft + ContainerContent.uncraftX - 51 ,
-					guiTop + ContainerContent.uncraftY - 1,
-					width + 20,height,StatCollector.translateToLocal("button.unc"));
-			buttonList.add(btnUncraft); 
-			btnUncraft.enabled = false;// turn it on based on ender chest present or not
-			btnUncraft.visible = btnUncraft.enabled;
-
-			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					guiLeft + ContainerContent.echestX + 19, 
-					guiTop + ContainerContent.echestY - 1,
-					12,height, "I",Const.INV_ENDER); 
-			buttonList.add(btnEnder); 
-			btnEnder.enabled = false;// turn it on based on ender chest present or not
-			btnEnder.visible = btnEnder.enabled;
+			ContainerContent.setupGui(this, this.thePlayer,this.buttonList);
 			
-			btnExp = new GuiButtonExp(button_id++, 
-					guiLeft + ContainerContent.bottleX - width - padding+1, 
-					guiTop + ContainerContent.bottleY-2,
-					width,height,StatCollector.translateToLocal("button.exp"));
-			buttonList.add(btnExp);
-			btnExp.enabled = false;
-			btnExp.visible = btnExp.enabled;
-		 
-			if(ModConfig.showSortButtons)
-			{  
-				width = 18;
-				int x_spacing = width + padding/2;
-				int x = guiLeft + xSize - 5*x_spacing - padding+1;
-				int y = guiTop + ySize - height - padding;
-				 
-				GuiButton btn;
-				 //was this.mc.thePlayer
-				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<",false);
-				this.buttonList.add(btn);
-
-				x += x_spacing;
-			 
-				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFT,"<",false);
-				buttonList.add(btn);
-
-				x += x_spacing;
-			 
-				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"),false);
-				buttonList.add(btn);
-				
-				x += x_spacing;
-
-				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHT,">",false);
-				buttonList.add(btn);
-				  
-				x += x_spacing;
-				
-				btn = new GuiButtonSort(thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>",false);
-				buttonList.add(btn);
-			}
 		}
     }
 	
@@ -201,10 +124,10 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
-        ContainerContent.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
+        ContainerContent.drawTexturedQuadFit(this.guiLeft(), this.guiTop(),Const.texture_width,Const.texture_height ,0);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
-        	func_147046_a(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
+        	func_147046_a(this.guiLeft() + 51, this.guiTop() + 75, 30, (float)(this.guiLeft() + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
 	}
 
 	@Override
@@ -244,7 +167,7 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 	@Override
 	public void btnEnder(GuiButton b)
 	{
-		btnExp=b;
+		btnEnder=b;
 	}
 
 	@Override
@@ -269,5 +192,15 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 	public void btnUncraft(GuiButton b)
 	{
 		btnUncraft=b;
+	}
+	@Override
+	public int guiLeft()
+	{
+		return this.guiLeft;
+	}
+	@Override
+	public int guiTop()
+	{
+		return this.guiTop;
 	}
 }
