@@ -14,10 +14,10 @@ import net.minecraft.util.ResourceLocation;
 public class GuiCustomPlayerInventory extends GuiContainer
 {
 	/** x size of the inventory window in pixels. Defined as float, passed as int */
-	private float xSize_lo;
+	//private float xSize_lo;
 	
 	/** y size of the inventory window in pixels. Defined as float, passed as int. */
-	private float ySize_lo;
+//	private float ySize_lo;
 	ResourceLocation res = new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE);
 	private final InventoryCustomPlayer inventory;
 	private final EntityPlayer thePlayer;
@@ -28,15 +28,18 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
 		inventory = inventoryCustom;
 		thePlayer = player;
+		
+		this.xSize = Const.texture_width;
+		this.ySize = Const.texture_height;
 
 	}
 	public void drawScreen(int par1, int par2, float par3)
 	{
 		super.drawScreen(par1, par2, par3);
 	
-		this.xSize_lo = (float)par1;
+		//this.xSize_lo = (float)par1;
 	
-		this.ySize_lo = (float)par2;
+	//	this.ySize_lo = (float)par2;
 	}
 	@Override
 	protected void drawGuiContainerForegroundLayer(	int p_146976_2_, int p_146976_3_)
