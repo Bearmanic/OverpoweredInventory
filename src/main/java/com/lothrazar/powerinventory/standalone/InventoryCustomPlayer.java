@@ -1,5 +1,7 @@
 package com.lothrazar.powerinventory.standalone;
 
+import com.lothrazar.powerinventory.Const;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -9,7 +11,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryCustomPlayer implements IInventory
 {
-	public static final int INV_SIZE = 2;
+	public static final int INV_SIZE = Const.INVOSIZE;
 	ItemStack[] inventory = new ItemStack[INV_SIZE];
 //thanks for http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
 	private final String tagName = "opinvtags";

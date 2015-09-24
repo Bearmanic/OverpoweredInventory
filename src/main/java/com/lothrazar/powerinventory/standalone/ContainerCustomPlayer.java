@@ -26,11 +26,11 @@ public class ContainerCustomPlayer extends Container
 		int i;
 		
 		
-		int slot = -1;
+		int slot = 0;
 		
-		this.addSlotToContainer(new Slot(inventoryCustom, slot++, 80, 8));
+		this.addSlotToContainer(new Slot(inventoryCustom, slot++, 81, 8));
 
-		this.addSlotToContainer(new Slot(inventoryCustom, slot++, 80, 26));
+		this.addSlotToContainer(new Slot(inventoryCustom, slot++, 81, 26));
 	
 		/*
 		//armor slots would go here
