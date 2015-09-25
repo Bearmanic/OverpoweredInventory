@@ -1,10 +1,11 @@
-package com.lothrazar.powerinventory.inventory;
+package com.lothrazar.powerinventory;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.standalone.InventoryCustomPlayer;
+import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
+import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
+import com.lothrazar.powerinventory.inventory.OverpoweredContainerPlayer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ import net.minecraftforge.common.IExtendedEntityProperties;
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
-public class InventoryPersistProperty implements IExtendedEntityProperties
+public class PlayerProperties implements IExtendedEntityProperties
 {
 
 public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
@@ -35,23 +36,23 @@ public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
 	
 	public static void register(EntityPlayer player)
 	{
-		player.registerExtendedProperties(ID, new InventoryPersistProperty(player));
+		player.registerExtendedProperties(ID, new PlayerProperties(player));
 	}
 	
-	public static InventoryPersistProperty get(EntityPlayer player)
+	public static PlayerProperties get(EntityPlayer player)
 	{
 		IExtendedEntityProperties property = player.getExtendedProperties(ID);
 		
-		if(property != null && property instanceof InventoryPersistProperty)
+		if(property != null && property instanceof PlayerProperties)
 		{
-			return (InventoryPersistProperty)property;
+			return (PlayerProperties)property;
 		} else
 		{
 			return null;
 		}
 	}
 	
-	public InventoryPersistProperty(EntityPlayer player)
+	public PlayerProperties(EntityPlayer player)
 	{
 		this.player = player;
 		this.prevPlayer = null;
@@ -65,7 +66,7 @@ public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
 		if(!(player.inventory instanceof BigInventoryPlayer))
 		{
 			player.inventory = new BigInventoryPlayer(player);
-			player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
+			player.inventoryContainer = new OverpoweredContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
 			player.openContainer = player.inventoryContainer;
 		}
 		
@@ -97,7 +98,7 @@ public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
 		if(!(player.inventory instanceof BigInventoryPlayer))
 		{
 			player.inventory = new BigInventoryPlayer(player);
-			player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
+			player.inventoryContainer = new OverpoweredContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
 			player.openContainer = player.inventoryContainer;
 			((BigInventoryPlayer)player.inventory).readFromNBT(properties.getTagList(Const.NBT_INVENTORY, 10));
 		}

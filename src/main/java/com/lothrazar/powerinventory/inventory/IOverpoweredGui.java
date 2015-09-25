@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory.inventory;
 
 import net.minecraft.client.gui.GuiButton;
 

@@ -1,6 +1,7 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory;
 
-import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.inventory.GuiCustomPlayerInventory;
+import com.lothrazar.powerinventory.inventory.OverpoweredContainerSolo;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -14,7 +15,7 @@ public class GuiHandler implements IGuiHandler
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z)
 	{ 
 		if (ID == GUI_CUSTOM_INV) 
-			return new ContainerCustomPlayer(player, player.inventory, InventoryPersistProperty.get(player).inventory);
+			return new OverpoweredContainerSolo(player, player.inventory, PlayerProperties.get(player).inventory);
 		else
 			return null;
 	}
@@ -23,7 +24,7 @@ public class GuiHandler implements IGuiHandler
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z)
 	{ 
 		if (ID == GUI_CUSTOM_INV)
-			return new GuiCustomPlayerInventory(player, player.inventory, InventoryPersistProperty.get(player).inventory);
+			return new GuiCustomPlayerInventory(player, player.inventory, PlayerProperties.get(player).inventory);
 		else
 			return null;
 	}

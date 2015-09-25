@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.proxy;
+package com.lothrazar.powerinventory.network;
 
 import java.util.ArrayList;
 

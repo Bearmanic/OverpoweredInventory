@@ -9,15 +9,8 @@ import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Logger;
 
+import com.lothrazar.powerinventory.network.*;
 import com.lothrazar.powerinventory.proxy.CommonProxy; 
-import com.lothrazar.powerinventory.proxy.DumpButtonPacket;
-import com.lothrazar.powerinventory.proxy.EnderChestPacket;
-import com.lothrazar.powerinventory.proxy.ExpButtonPacket;
-import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
-import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
-import com.lothrazar.powerinventory.proxy.SortButtonPacket; 
-import com.lothrazar.powerinventory.proxy.UncButtonPacket;
-import com.lothrazar.powerinventory.standalone.GuiHandler;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;

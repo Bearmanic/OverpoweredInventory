@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory.inventory;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StatCollector;
 
-public class ContainerContent
+public class InventoryBuilder
 {
 	final static int padding = 6;
 	public static final int pearlX = 80; 
@@ -60,8 +60,8 @@ public class ContainerContent
 		}
 		 
 		GuiButtonUnc btnUncraft = new GuiButtonUnc(button_id++, 
-				self.guiLeft() + ContainerContent.uncraftX - 51 ,
-				self.guiTop() + ContainerContent.uncraftY - 1,
+				self.guiLeft() + InventoryBuilder.uncraftX - 51 ,
+				self.guiTop() + InventoryBuilder.uncraftY - 1,
 				width + 20,height,StatCollector.translateToLocal("button.unc"));
 		buttonList.add(btnUncraft); 
 		btnUncraft.enabled = false;// turn it on based on ender chest present or not
@@ -69,8 +69,8 @@ public class ContainerContent
 		self.btnUncraft(btnUncraft);
 
 		GuiButtonOpenInventory btnEnder = new GuiButtonOpenInventory(button_id++, 
-				self.guiLeft() + ContainerContent.echestX + 19, 
-				self.guiTop() + ContainerContent.echestY - 1,
+				self.guiLeft() + InventoryBuilder.echestX + 19, 
+				self.guiTop() + InventoryBuilder.echestY - 1,
 				12,height, "I",Const.INV_ENDER); 
 		buttonList.add(btnEnder); 
 		btnEnder.enabled = false;// turn it on based on ender chest present or not
@@ -78,8 +78,8 @@ public class ContainerContent
 		self.btnEnder(btnEnder);
 		
 		GuiButtonExp btnExp = new GuiButtonExp(button_id++, 
-				self.guiLeft() + ContainerContent.bottleX - width - padding+1, 
-				self.guiTop() + ContainerContent.bottleY-2,
+				self.guiLeft() + InventoryBuilder.bottleX - width - padding+1, 
+				self.guiTop() + InventoryBuilder.bottleY-2,
 				width,height,StatCollector.translateToLocal("button.exp"));
 		buttonList.add(btnExp);
 		btnExp.enabled = false;
@@ -120,16 +120,12 @@ public class ContainerContent
 		}
 		
 	}
-	public static void setupContainer()
+	
+	
+	public static void setupContainer(IOverpoweredContainer self)
 	{
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)

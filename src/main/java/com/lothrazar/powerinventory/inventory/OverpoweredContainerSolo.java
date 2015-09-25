@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory.inventory;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -10,7 +10,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ContainerCustomPlayer extends Container
+public class OverpoweredContainerSolo extends Container implements IOverpoweredContainer
 {
 	private static final int ARMOR_START = InventoryCustomPlayer.INV_SIZE, ARMOR_END = ARMOR_START+3,
 
@@ -19,7 +19,7 @@ public class ContainerCustomPlayer extends Container
 			HOTBAR_END = HOTBAR_START+8;
 	
 	private EntityPlayer thePlayer;
-	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
+	public OverpoweredContainerSolo(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
 		thePlayer = player;
 

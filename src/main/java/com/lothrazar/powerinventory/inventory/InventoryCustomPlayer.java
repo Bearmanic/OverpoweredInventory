@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
 
@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 
-public class InventoryCustomPlayer implements IInventory
+public class InventoryCustomPlayer implements IInventory, IOverpoweredInventory
 {
 	public static final int INV_SIZE = Const.INVOSIZE;
 	ItemStack[] inventory = new ItemStack[INV_SIZE];

@@ -17,11 +17,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-/**
- * @author https://github.com/Funwayguy/InfiniteInvo
- * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
- */
-public class BigInventoryPlayer extends InventoryPlayer
+
+public class BigInventoryPlayer extends InventoryPlayer implements IOverpoweredInventory
 {
     @SideOnly(Side.CLIENT)
     private ItemStack currentItemStack;

@@ -28,18 +28,15 @@ import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.world.WorldEvent;
-
-import org.apache.logging.log4j.Level;
-
-import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
+import net.minecraftforge.event.world.WorldEvent; 
+import org.apache.logging.log4j.Level; 
+import com.lothrazar.powerinventory.inventory.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
+import com.lothrazar.powerinventory.network.EnderPearlPacket;
+import com.lothrazar.powerinventory.network.EnderChestPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
-import com.lothrazar.powerinventory.proxy.EnderChestPacket;
-import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
@@ -77,9 +74,9 @@ public class EventHandler
 		{
 			EntityPlayer player = (EntityPlayer)event.entity;
 			
-			if(InventoryPersistProperty.get(player) == null)
+			if(PlayerProperties.get(player) == null)
 			{
-				InventoryPersistProperty.register(player);
+				PlayerProperties.register(player);
 			}
 		}
 	}
@@ -91,9 +88,9 @@ public class EventHandler
 		{
 			EntityPlayer player = (EntityPlayer)event.entity;
 			
-			if(InventoryPersistProperty.get(player) != null)
+			if(PlayerProperties.get(player) != null)
 			{
-				InventoryPersistProperty.get(player).onJoinWorld();
+				PlayerProperties.get(player).onJoinWorld();
 			} 
 		}
 	}
@@ -105,7 +102,7 @@ public class EventHandler
 		{
 			if(!event.entityLiving.worldObj.isRemote && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
 			{
-				InventoryPersistProperty.keepInvoCache.put(event.entityLiving.getUniqueID(), ((EntityPlayer)event.entityLiving).inventory.writeToNBT(new NBTTagList()));
+				PlayerProperties.keepInvoCache.put(event.entityLiving.getUniqueID(), ((EntityPlayer)event.entityLiving).inventory.writeToNBT(new NBTTagList()));
 			}
 		}
 	}
@@ -207,7 +204,7 @@ public class EventHandler
 			
 			worldDir = null;
 			unlockCache.clear();
-			InventoryPersistProperty.keepInvoCache.clear();
+			PlayerProperties.keepInvoCache.clear();
 		}
 	}
 	

@@ -1,15 +1,16 @@
-package com.lothrazar.powerinventory.inventory;
+package com.lothrazar.powerinventory.inventory.slot;
 
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks; 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class SlotEnderPearl extends Slot
+public class SlotEnderChest extends Slot
 {
 	public int slotIndex;//overrides the private internal one
 	
-	public SlotEnderPearl(IInventory inventoryIn, int index, int xPosition,int yPosition) 
+	public SlotEnderChest(IInventory inventoryIn, int index, int xPosition,int yPosition) 
 	{
 		super(inventoryIn, index, xPosition, yPosition);
  
@@ -25,13 +26,12 @@ public class SlotEnderPearl extends Slot
 	@Override
 	public boolean isItemValid(ItemStack stack)
     {
-		return (stack != null && stack.getItem() == Items.ender_pearl);
+		return (stack != null && stack.getItem() == Item.getItemFromBlock(Blocks.ender_chest));
     }
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public int getSlotStackLimit()
     {
-        return Items.ender_pearl.getItemStackLimit();
+        return 1;
     }
 }

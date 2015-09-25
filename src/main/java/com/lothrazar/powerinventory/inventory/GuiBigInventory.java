@@ -1,45 +1,31 @@
-package com.lothrazar.powerinventory.inventory.client;
+package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const; 
 import com.lothrazar.powerinventory.ModConfig;
-import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
-import com.lothrazar.powerinventory.standalone.ContainerContent;
-import com.lothrazar.powerinventory.standalone.IOverpoweredGui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
  
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
-/**
- * @author https://github.com/Funwayguy/InfiniteInvo
- * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
- */
+
 public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 {
-	private BigContainerPlayer container;
-
+	private OverpoweredContainerPlayer container;
+	private EntityPlayer thePlayer;
 	
-	
-	EntityPlayer thePlayer;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
-		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
+		container = player.inventoryContainer instanceof OverpoweredContainerPlayer? (OverpoweredContainerPlayer)player.inventoryContainer : null;
 		this.xSize = Const.texture_width;
 		this.ySize = Const.texture_height;
 		thePlayer = player;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui()
     { 
@@ -47,8 +33,7 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 		  
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
-			ContainerContent.setupGui(this, this.thePlayer,this.buttonList);
-			
+			InventoryBuilder.setupGui(this, this.thePlayer,this.buttonList);
 		}
     }
 	
@@ -61,7 +46,7 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 			btnEnder.enabled = false;
 			btnEnder.visible = btnEnder.enabled;
  
-			drawTextureSimple("textures/items/empty_enderchest.png",ContainerContent.echestX, ContainerContent.echestY,s,s); 
+			drawTextureSimple("textures/items/empty_enderchest.png",InventoryBuilder.echestX, InventoryBuilder.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -86,7 +71,7 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 			btnExp.enabled = false;
 			btnExp.visible = btnExp.enabled;
   
-			drawTextureSimple("textures/items/empty_bottle.png",ContainerContent.bottleX, ContainerContent.bottleY,s,s); 
+			drawTextureSimple("textures/items/empty_bottle.png",InventoryBuilder.bottleX, InventoryBuilder.bottleY,s,s); 
 		}
 		else 
 		{ 
@@ -96,25 +81,26 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_enderpearl.png",ContainerContent.pearlX, ContainerContent.pearlY,s,s);
+			drawTextureSimple("textures/items/empty_enderpearl.png",InventoryBuilder.pearlX, InventoryBuilder.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			drawTextureSimple("textures/items/empty_compass.png",ContainerContent.compassX, ContainerContent.compassY,s,s);
+			drawTextureSimple("textures/items/empty_compass.png",InventoryBuilder.compassX, InventoryBuilder.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_clock.png",ContainerContent.clockX, ContainerContent.clockY,s,s);
+			drawTextureSimple("textures/items/empty_clock.png",InventoryBuilder.clockX, InventoryBuilder.clockY,s,s);
 		}
 	}
 	 
+	
 	public void drawTextureSimple(String texture,double x, double y, double width, double height)
 	{
 		//wrapper for drawTexturedQuadFit
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		ContainerContent.drawTexturedQuadFit(x,y,width,height,0);
+		InventoryBuilder.drawTexturedQuadFit(x,y,width,height,0);
 	}
  
 	@Override
@@ -124,7 +110,7 @@ public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
-        ContainerContent.drawTexturedQuadFit(this.guiLeft(), this.guiTop(),Const.texture_width,Const.texture_height ,0);
+        InventoryBuilder.drawTexturedQuadFit(this.guiLeft(), this.guiTop(),Const.texture_width,Const.texture_height ,0);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	func_147046_a(this.guiLeft() + 51, this.guiTop() + 75, 30, (float)(this.guiLeft() + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);

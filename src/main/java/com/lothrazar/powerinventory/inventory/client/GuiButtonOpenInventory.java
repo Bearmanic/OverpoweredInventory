@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.EnderChestPacket;
+import com.lothrazar.powerinventory.inventory.GuiBigInventory;
+import com.lothrazar.powerinventory.network.EnderChestPacket;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
 

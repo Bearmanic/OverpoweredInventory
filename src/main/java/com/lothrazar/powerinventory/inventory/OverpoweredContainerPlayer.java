@@ -20,13 +20,13 @@ import org.apache.logging.log4j.Level;
 import com.google.common.collect.Lists;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
-import com.lothrazar.powerinventory.standalone.ContainerContent;
-/**
- * @author https://github.com/Funwayguy/InfiniteInvo
- * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
- */
-public class BigContainerPlayer extends ContainerPlayer
+import com.lothrazar.powerinventory.inventory.slot.SlotBottle;
+import com.lothrazar.powerinventory.inventory.slot.SlotClock;
+import com.lothrazar.powerinventory.inventory.slot.SlotCompass;
+import com.lothrazar.powerinventory.inventory.slot.SlotEnderChest;
+import com.lothrazar.powerinventory.inventory.slot.SlotEnderPearl;
+
+public class OverpoweredContainerPlayer extends ContainerPlayer implements IOverpoweredContainer
 {	
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
     private final EntityPlayer thePlayer;
@@ -56,7 +56,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	static int S_COMPASS;
 	static int S_BOTTLE;
 	static int S_UNCRAFT;
-	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
+	public OverpoweredContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
 		
@@ -136,22 +136,22 @@ public class BigContainerPlayer extends ContainerPlayer
         S_MAIN_END = this.inventorySlots.size() - 1;
         
         S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, ContainerContent.pearlX, ContainerContent.pearlY));
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
 
         S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, ContainerContent.echestX, ContainerContent.echestY)); 
+        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
 
         S_CLOCK =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, ContainerContent.clockX, ContainerContent.clockY)); 
+        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
 
         S_COMPASS =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, ContainerContent.compassX, ContainerContent.compassY)); 
+        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
         
         S_BOTTLE =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, ContainerContent.bottleX, ContainerContent.bottleY)); 
+        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
         
         S_UNCRAFT =  this.inventorySlots.size() ;//TODO: should it work like crafting window and dump contents
-        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, ContainerContent.uncraftX, ContainerContent.uncraftY)); 
+        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
         
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = playerInventory; 

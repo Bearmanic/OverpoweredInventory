@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory.inventory;
 
 import org.lwjgl.opengl.GL11;
 
@@ -20,36 +20,33 @@ public class GuiCustomPlayerInventory extends GuiContainer implements IOverpower
 	
 	public GuiCustomPlayerInventory(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
-		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
+		super(new OverpoweredContainerSolo(player, inventoryPlayer, inventoryCustom));
 		inventory = inventoryCustom;
 		thePlayer = player;
 		
 		this.xSize = Const.texture_width;
 		this.ySize = Const.texture_height;
-
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui()
     { 
 		super.initGui();
 		  
-		 
-		ContainerContent.setupGui(this, this.thePlayer,this.buttonList);
-		 
+		InventoryBuilder.setupGui(this, this.thePlayer,this.buttonList);
     }
 	
 	public void drawScreen(int par1, int par2, float par3)
 	{
 		super.drawScreen(par1, par2, par3);
 	}
+	
 	@Override
 	protected void drawGuiContainerForegroundLayer(	int p_146976_2_, int p_146976_3_)
 	{ 
 		//drawing text and such on screen
-		
 	}
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float p_146976_1_,	int p_146976_2_, int p_146976_3_)
 	{ 
@@ -57,10 +54,8 @@ public class GuiCustomPlayerInventory extends GuiContainer implements IOverpower
 		GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 		
-		ContainerContent.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
- 
+		InventoryBuilder.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
 	}
-
 
 	private GuiButton btnEnder;
 	private GuiButton btnExp;
@@ -70,31 +65,26 @@ public class GuiCustomPlayerInventory extends GuiContainer implements IOverpower
 	{
 		return btnEnder;
 	}
-
 	@Override
 	public void btnEnder(GuiButton b)
 	{
 		btnExp=b;
 	}
-
 	@Override
 	public GuiButton btnExp()
 	{
 		return btnExp;
 	}
-
 	@Override
 	public void btnExp(GuiButton b)
 	{
 		btnExp=b;
 	}
-
 	@Override
 	public GuiButton btnUncraft()
 	{
 		return btnUncraft;
 	}
-
 	@Override
 	public void btnUncraft(GuiButton b)
 	{

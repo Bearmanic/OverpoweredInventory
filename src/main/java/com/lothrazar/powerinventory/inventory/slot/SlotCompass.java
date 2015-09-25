@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.inventory;
+package com.lothrazar.powerinventory.inventory.slot;
 
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
