@@ -53,21 +53,21 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 	
 //store slot numbers  (not indexes) as we go. so that transferStack.. is actually readable
 	 
-	static int S_RESULT;
-	static int S_CRAFT_START;
-	static int S_CRAFT_END;
-	static int S_ARMOR_START;
-	static int S_ARMOR_END;
-	static int S_BAR_START;
-	static int S_BAR_END;
-	static int S_MAIN_START;
-	static int S_MAIN_END;
-	static int S_ECHEST;
-	static int S_PEARL;
-	static int S_CLOCK;
-	static int S_COMPASS;
-	static int S_BOTTLE;
-	static int S_UNCRAFT;
+	int S_RESULT;
+	int S_CRAFT_START;
+	int S_CRAFT_END;
+	int S_ARMOR_START;
+	int S_ARMOR_END;
+	int S_BAR_START;
+	int S_BAR_END;
+	int S_MAIN_START;
+	int S_MAIN_END;
+	int S_ECHEST;
+	int S_PEARL;
+	int S_CLOCK;
+	int S_COMPASS;
+	int S_BOTTLE;
+	int S_UNCRAFT;
 	
 	public OverpoweredContainerPlayer(OverpoweredInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
@@ -76,18 +76,15 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 		inventorySlots = Lists.newArrayList();//undo everything done by super()
 		craftMatrix = new InventoryCrafting(this, craftSize, craftSize);
  
-		InventoryBuilder.setupContainer(this);
 		
-		
-		OverpoweredContainerPlayer self = this;
 		
         int i,j,cx,cy;//rows and cols of vanilla, not extra
-        S_RESULT = self.getSlotCount();
-        self.addSlot(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
+        S_RESULT = this.getSlotCount();
+        this.addSlot(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
         		200,  
         		40));
         
-        S_CRAFT_START = self.getSlotCount();
+        S_CRAFT_START = this.getSlotCount();
         for (i = 0; i < craftSize; ++i)
         { 
             for (j = 0; j < craftSize; ++j)
@@ -95,13 +92,20 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
     			cx = 114 + j * Const.square ; 
     			cy = 20 + i * Const.square ;
 
-    			self.addSlot(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
+    			this.addSlot(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
             }
         }
-        S_CRAFT_END = self.getSlotCount() - 1;
+        S_CRAFT_END = this.getSlotCount() - 1;
         
         
-        S_ARMOR_START = self.getSlotCount();
+        //InventoryBuilder.setupContainer(this);
+		
+
+		OverpoweredContainerPlayer self = this;
+        
+		
+		
+		self.S_ARMOR_START = self.getSlotCount();
         for (i = 0; i < Const.armorSize; ++i)
         {
         	cx = 8;
@@ -183,20 +187,15 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 	public Slot getSlotFromInventory(IInventory invo, int id)
 	{
 		Slot slot = super.getSlotFromInventory(invo, id);
-		if(slot == null)
-		{
-			Exception e = new NullPointerException();
-			 
-			ModInv.logger.log(Level.FATAL, e.getStackTrace()[1].getClassName() + "." + e.getStackTrace()[1].getMethodName() + ":" + e.getStackTrace()[1].getLineNumber() + " is requesting slot " + id + " from inventory " + invo.getInventoryName() + " (" + invo.getClass().getName() + ") and got NULL!", e);
-		}
+	
 		return slot;
 	}
-	
+
 	@Override
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
-
+// we COULD not empty it BUT then it gets erased on logout, etc
         for (int i = 0; i < craftSize*craftSize; ++i) // was 4
         {
             ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
@@ -220,6 +219,7 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 		{
 			return super.transferStackInSlot(p, slotNumber);
 		}
+		 
 		//Thanks to coolAlias on the forums : 
 		//http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571051-custom-container-how-to-properly-override-shift
 		//above is from 2013 but still relevant
@@ -341,7 +341,7 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(stackOrig, 9, invo.getSlotsNotArmor() + 9, false)) // Full range
+            else if (!this.mergeItemStack(stackOrig, Const.hotbarSize, invo.getSlotsNotArmor() + Const.hotbarSize, false)) // Full range
             {
                 return null;
             }
