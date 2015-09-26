@@ -23,14 +23,14 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class OverpoweredContainerSolo extends Container implements IOverpoweredContainer
+public class OverpoweredContainerSolo extends Container // implements IOverpoweredContainer//TODO
 { 
-	@Override
+	//@Override
 	public void addSlot(Slot s)
 	{
         super.addSlotToContainer(s);
 	}
-	@Override
+	//@Override
 	public int getSlotCount()
 	{
 		return inventorySlots.size();
