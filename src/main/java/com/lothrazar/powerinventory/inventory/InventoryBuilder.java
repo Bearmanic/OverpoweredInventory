@@ -21,6 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -31,6 +32,7 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
 public class InventoryBuilder
@@ -409,7 +411,14 @@ public class InventoryBuilder
 
         return stackCopy;
 	}
+
 	
+	public static void drawTextureSimple(TextureManager tm,String texture,double x, double y, double width, double height)
+	{
+		//wrapper for drawTexturedQuadFit
+		tm.bindTexture(new ResourceLocation(Const.MODID, texture)); 
+		InventoryBuilder.drawTexturedQuadFit(x,y,width,height,0);
+	}
 	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
 	{
 		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?

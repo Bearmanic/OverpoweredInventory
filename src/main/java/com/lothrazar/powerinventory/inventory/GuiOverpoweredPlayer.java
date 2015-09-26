@@ -6,6 +6,7 @@ import com.lothrazar.powerinventory.ModConfig;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
  
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
@@ -40,69 +41,61 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 	private void checkSlotsEmpty()
 	{
 		final int s = 16;
- 
+		TextureManager tm = this.mc.getTextureManager();
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
-			btnEnder.enabled = false;
-			btnEnder.visible = btnEnder.enabled;
+			btnEnder().enabled = false;
+			btnEnder().visible = btnEnder.enabled;
  
-			drawTextureSimple("textures/items/empty_enderchest.png",InventoryBuilder.echestX, InventoryBuilder.echestY,s,s); 
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_enderchest.png",InventoryBuilder.echestX, InventoryBuilder.echestY,s,s); 
 		}
 		else 
 		{ 
-			btnEnder.enabled = true; 
-			btnEnder.visible = btnEnder.enabled;
+			btnEnder().enabled = true; 
+			btnEnder().visible = btnEnder.enabled;
 		}
 		
 		if(container.invo.getStackInSlot(Const.uncraftSlot) == null)
 		{ 
-			btnUncraft.enabled = false;
-			btnUncraft.visible = btnUncraft.enabled; 
+			btnUncraft().enabled = false;
+			btnUncraft().visible = btnUncraft.enabled; 
 		}
 		else 
 		{ 
-			btnUncraft.enabled = true; 
-			btnUncraft.visible = btnUncraft.enabled;
+			btnUncraft().enabled = true; 
+			btnUncraft().visible = btnUncraft.enabled;
 		}
 		
 		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
 		   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
 		{
-			btnExp.enabled = false;
-			btnExp.visible = btnExp.enabled;
+			btnExp().enabled = false;
+			btnExp().visible = btnExp.enabled;
   
-			drawTextureSimple("textures/items/empty_bottle.png",InventoryBuilder.bottleX, InventoryBuilder.bottleY,s,s); 
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_bottle.png",InventoryBuilder.bottleX, InventoryBuilder.bottleY,s,s); 
 		}
 		else 
 		{ 
-			btnExp.enabled = true; 
-			btnExp.visible = btnExp.enabled;
+			btnExp().enabled = true; 
+			btnExp().visible = btnExp.enabled;
 		}
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_enderpearl.png",InventoryBuilder.pearlX, InventoryBuilder.pearlY,s,s);
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_enderpearl.png",InventoryBuilder.pearlX, InventoryBuilder.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			drawTextureSimple("textures/items/empty_compass.png",InventoryBuilder.compassX, InventoryBuilder.compassY,s,s);
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_compass.png",InventoryBuilder.compassX, InventoryBuilder.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_clock.png",InventoryBuilder.clockX, InventoryBuilder.clockY,s,s);
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_clock.png",InventoryBuilder.clockX, InventoryBuilder.clockY,s,s);
 		}
 	}
-	 
 	
-	public void drawTextureSimple(String texture,double x, double y, double width, double height)
-	{
-		//wrapper for drawTexturedQuadFit
-		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		InventoryBuilder.drawTexturedQuadFit(x,y,width,height,0);
-	}
- 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
