@@ -25,6 +25,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.IIcon;
 
 public class OverpoweredContainerSolo extends Container  implements IOverpoweredContainer//TODO
@@ -68,7 +69,13 @@ public class OverpoweredContainerSolo extends Container  implements IOverpowered
 
         this.onCraftMatrixChanged(this.craftMatrix);
 	}
-
+	
+	public void onCraftMatrixChanged(IInventory p_75130_1_)
+    {
+	 //COPIED FROM ContainerPlayer.class 
+        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.thePlayer.worldObj));
+    }
+	
 	@Override
     public void onContainerClosed(EntityPlayer playerIn)
     {
