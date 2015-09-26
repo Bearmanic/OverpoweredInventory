@@ -5,6 +5,8 @@ package com.lothrazar.powerinventory;
  */
 public class Const
 { 
+	public static final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
+	
     public static final String MODID = "powerinventory";
     public static String INVENTORY_TEXTURE = "textures/gui/inventory_gui.png";
 	public static int texture_width = 464;

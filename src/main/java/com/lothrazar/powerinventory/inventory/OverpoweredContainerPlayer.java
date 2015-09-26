@@ -38,9 +38,18 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 	{
 		return inventorySlots.size();
 	}
+
+	public boolean mergeItemStack(ItemStack is, int x, int y, boolean f)
+	{
+		return super.mergeItemStack(is, x, y, f);
+	}
+
+	@Override
+	public Slot getSlot(int slotNumber)
+	{
+		return (Slot)this.inventorySlots.get(slotNumber);
+	}
 	
-	
-	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
     private final EntityPlayer thePlayer;
  
 	public OverpoweredInventoryPlayer invo;
@@ -59,31 +68,12 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 		super(playerInventory, isLocal, player);
         this.thePlayer = player;
 		inventorySlots = Lists.newArrayList();//undo everything done by super()
-		craftMatrix = new InventoryCrafting(this, craftSize, craftSize);
+		craftMatrix = new InventoryCrafting(this, Const.craftSize,  Const.craftSize);
  
-
-		
-        int i,j,cx,cy;//rows and cols of vanilla, not extra
-        InventoryBuilder.S_RESULT = this.getSlotCount();
-        this.addSlot(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
-        		200,  
-        		40));
-        
-        InventoryBuilder.S_CRAFT_START = this.getSlotCount();
-        for (i = 0; i < craftSize; ++i)
-        { 
-            for (j = 0; j < craftSize; ++j)
-            {  
-    			cx = 114 + j * Const.square ; 
-    			cy = 20 + i * Const.square ;
-
-    			this.addSlot(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
-            }
-        }
-        InventoryBuilder.S_CRAFT_END = this.getSlotCount() - 1;
+ 
         
 		//OverpoweredContainerPlayer self = this;
-		InventoryBuilder.setupContainer(this,thePlayer,playerInventory);
+		InventoryBuilder.setupContainer(this,thePlayer,playerInventory,craftMatrix,craftResult);
 		
 
 
@@ -104,8 +94,9 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
+        //TODO: move to InventoryBuilder
 // we COULD not empty it BUT then it gets erased on logout, etc
-        for (int i = 0; i < craftSize*craftSize; ++i) // was 4
+        for (int i = 0; i < Const.craftSize*Const.craftSize; ++i) // was 4
         {
             ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
 
@@ -118,16 +109,6 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
         this.craftResult.setInventorySlotContents(0, (ItemStack)null);
     }
 
-	public boolean mergeItemStack(ItemStack is, int x, int y, boolean f)
-	{
-		return super.mergeItemStack(is, x, y, f);
-	}
-
-	@Override
-	public Slot getSlot(int slotNumber)
-	{
-		return (Slot)this.inventorySlots.get(slotNumber);
-	}
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
@@ -138,10 +119,8 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 		{
 			return super.transferStackInSlot(p, slotNumber);
 		}
-		 
-		IOverpoweredContainer self = this;
-		
-		return InventoryBuilder.transferStackInSlot(self, p, slotNumber);
+		  
+		return InventoryBuilder.transferStackInSlot(this, p, slotNumber);
 		
     }
 }

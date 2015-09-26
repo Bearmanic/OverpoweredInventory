@@ -3,6 +3,7 @@ package com.lothrazar.powerinventory.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.inventory.slot.SlotBottle;
 import com.lothrazar.powerinventory.inventory.slot.SlotClock;
@@ -17,13 +18,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class OverpoweredContainerSolo extends Container // implements IOverpoweredContainer//TODO
+public class OverpoweredContainerSolo extends Container  implements IOverpoweredContainer//TODO
 { 
 	//@Override
 	public void addSlot(Slot s)
@@ -36,105 +40,53 @@ public class OverpoweredContainerSolo extends Container // implements IOverpower
 		return inventorySlots.size();
 	}
 
+	public boolean mergeItemStack(ItemStack is, int x, int y, boolean f)
+	{
+		return super.mergeItemStack(is, x, y, f);
+	}
 
-	int S_BAR_START;
-	int S_BAR_END;
-	int S_MAIN_START;
-	int S_MAIN_END;
-	int S_ECHEST;
-	int S_PEARL;
-	int S_CLOCK;
-	int S_COMPASS;
-	int S_BOTTLE;
-	int S_UNCRAFT;
+	@Override
+	public Slot getSlot(int slotNumber)
+	{
+		return (Slot)this.inventorySlots.get(slotNumber);
+	}
+
+
+    public IInventory craftResult = new InventoryCraftResult();
 	
 	private EntityPlayer thePlayer;
+	private InventoryCrafting craftMatrix;
 	public OverpoweredContainerSolo(EntityPlayer player, InventoryPlayer playerInventory, OverpoweredInventorySolo inventoryCustom)
 	{
 		thePlayer = player;
+		inventorySlots = Lists.newArrayList();//undo everything done by super()
+		craftMatrix = new InventoryCrafting(this,  Const.craftSize,  Const.craftSize);
+		 
 
-		//IOverpoweredContainer self = this;
-		OverpoweredContainerSolo self = this;
 
-        int i,j,cx,cy;//rows and cols of vanilla, not extra
-		/*
-		self.S_ARMOR_START = self.getSlotCount();
-        for (i = 0; i < Const.armorSize; ++i)
+		InventoryBuilder.setupContainer(this,thePlayer,playerInventory,craftMatrix,craftResult);
+
+        this.onCraftMatrixChanged(this.craftMatrix);
+	}
+
+	@Override
+    public void onContainerClosed(EntityPlayer playerIn)
+    {
+        super.onContainerClosed(playerIn);
+        //TODO: move to InventoryBuilder
+// we COULD not empty it BUT then it gets erased on logout, etc
+        for (int i = 0; i < Const.craftSize*Const.craftSize; ++i) // was 4
         {
-        	cx = 8;
-        	cy = 8 + i * Const.square;
-            final int k = i;
- 
-            int size = Const.INVOSIZE + Const.hotbarSize;// playerInventory.getSizeInventory()
-            self.addSlot(new Slot(playerInventory,  size - 1 - i, cx, cy)
-            { 
-            	public int getSlotStackLimit()
-	            {
-	                return 1;
-	            }
-	            public boolean isItemValid(ItemStack stack)
-	            {
-	                if (stack == null) return false;
-	                return stack.getItem().isValidArmor(stack, k, thePlayer);
-	            }
-	            @SideOnly(Side.CLIENT)
-	            public String getSlotTexture()
-	            {
-	                return ItemArmor.EMPTY_SLOT_NAMES[k];
-	            }
-            }); 
-        }
-        S_ARMOR_END = self.getSlotCount() - 1;*/
-        
-        S_BAR_START = self.getSlotCount();
-        for (i = 0; i < Const.hotbarSize; ++i)
-        { 
-        	cx = 8 + i * Const.square;
-        	cy = 142 + (Const.square * Const.MORE_ROWS);
- 
-        	self.addSlot(new Slot(playerInventory, i, cx, cy));
-        }
-        S_BAR_END = self.getSlotCount() - 1;
-        
-        
-        S_MAIN_START = self.getSlotCount();
-        int slotIndex = Const.hotbarSize;
-        
-        for( i = 0; i < Const.ALL_ROWS; i++)
-		{
-            for ( j = 0; j < Const.ALL_COLS; ++j)
-            { 
-            	cx = 8 + j * Const.square;
-            	cy = 84 + i * Const.square;
-            	self.addSlot(new Slot(playerInventory, slotIndex, cx, cy));
-            	slotIndex++;
+            ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+
+            if (itemstack != null)
+            {
+                playerIn.dropPlayerItemWithRandomChoice(itemstack, false);
             }
         }
-        S_MAIN_END = self.getSlotCount() - 1;
-        
-        
-        S_PEARL =  self.getSlotCount() ;
-        self.addSlot(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
 
-        S_ECHEST =  self.getSlotCount() ;
-        self.addSlot(new SlotEnderChest(playerInventory, Const.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
-
-        S_CLOCK =  self.getSlotCount();
-        self.addSlot(new SlotClock(playerInventory, Const.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
-
-        S_COMPASS = self.getSlotCount() ;
-        self.addSlot(new SlotCompass(playerInventory, Const.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
-        
-        S_BOTTLE = self.getSlotCount() ;
-        self.addSlot(new SlotBottle(playerInventory, Const.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
-        
-        S_UNCRAFT =self.getSlotCount() ;
-        self.addSlot(new Slot(playerInventory, Const.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
-
-        
-		
-	}
-	
+        this.craftResult.setInventorySlotContents(0, (ItemStack)null);
+    }
 	@Override
 	public boolean canInteractWith(EntityPlayer player)
 	{
@@ -144,10 +96,10 @@ public class OverpoweredContainerSolo extends Container // implements IOverpower
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber)
-	{
-		//TODO: this is copied over from container, need a way to share, but it doesnt have crafting
-		 
-
+	{ 
+		return InventoryBuilder.transferStackInSlot(this, p, slotNumber);
+		
+/*
 		//Thanks to coolAlias on the forums : 
 		//http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571051-custom-container-how-to-properly-override-shift
 		//above is from 2013 but still relevant
@@ -157,43 +109,7 @@ public class OverpoweredContainerSolo extends Container // implements IOverpower
 		if (slot != null && slot.getHasStack())
         {
             ItemStack stackOrig = slot.getStack();
-            stackCopy = stackOrig.copy();
-            /*
-            if (slotNumber == S_RESULT)  
-            { 
-            	//System.out.printf("\ntest result %d %d ___  ",S_MAIN_START,S_MAIN_END);
-                if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))//was starting at S_BAR_START
-                {
-                    return null;
-                }
-
-                slot.onSlotChange(stackOrig, stackCopy);
-            }
-            else if (slotNumber >= S_CRAFT_START && slotNumber <= S_CRAFT_END) 
-            { 
-                if (!this.mergeItemStack(stackOrig,  S_BAR_START, S_MAIN_END, false))//was 9,45
-                {
-                    return null;
-                }
-            }
-            else if (slotNumber >= S_ARMOR_START && slotNumber <= S_ARMOR_END) 
-            { 
-                if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
-                {
-                    return null;
-                }
-            }
-            else if (stackCopy.getItem() instanceof ItemArmor 
-            		&& !((Slot)this.inventorySlots.get(S_ARMOR_START + ((ItemArmor)stackCopy.getItem()).armorType)).getHasStack()) // Inventory to armor
-            { 
-            	int j = S_ARMOR_START + ((ItemArmor)stackCopy.getItem()).armorType;
-           
-            	if (!this.mergeItemStack(stackOrig, j, j+1, false))
-                {
-                    return null;
-                } 
-            }
-            else  */ if (slotNumber >= S_MAIN_START && slotNumber <= S_MAIN_END) // main inv grid
+            stackCopy = stackOrig.copy();  if (slotNumber >= S_MAIN_START && slotNumber <= S_MAIN_END) // main inv grid
             { 
             	//only from here are we doing the special items
             	
@@ -293,6 +209,7 @@ public class OverpoweredContainerSolo extends Container // implements IOverpower
         }
 
         return stackCopy;
+        */
 	
 	} //end transfer function
 

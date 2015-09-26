@@ -25,7 +25,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -67,10 +69,11 @@ public class InventoryBuilder
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void setupGui(IOverpoweredGui self, EntityPlayer thePlayer, List buttonList)
 	{
-		int xSize = Const.texture_width;
-		int ySize = Const.texture_height;
+		//int xSize = Const.texture_width;
+		//int ySize = Const.texture_height;
 		
 		
 		final int height = 20;
@@ -155,11 +158,29 @@ public class InventoryBuilder
 		
 	}
 	
-	public static void setupContainer(IOverpoweredContainer self,final EntityPlayer thePlayer,IInventory playerInventory)
+	public static void setupContainer(IOverpoweredContainer self,final EntityPlayer thePlayer,IInventory playerInventory, 
+			InventoryCrafting craftMatrix,
+			IInventory craftResult)
 	{
+		 int i,j,cx,cy;//rows and cols of vanilla, not extra
+        
+        InventoryBuilder.S_RESULT = self.getSlotCount();
+        self.addSlot(new SlotCrafting(thePlayer, craftMatrix, craftResult, 0, 
+        		200,  
+        		40));
+        
+        InventoryBuilder.S_CRAFT_START = self.getSlotCount();
+        for (i = 0; i < Const.craftSize; ++i)
+        { 
+            for (j = 0; j < Const.craftSize; ++j)
+            {  
+    			cx = 114 + j * Const.square ; 
+    			cy = 20 + i * Const.square ;
 
-
-        int i,j,cx,cy;//rows and cols of vanilla, not extra
+    			self.addSlot(new Slot(craftMatrix, j + i * Const.craftSize, cx , cy)); 
+            }
+        }
+        InventoryBuilder.S_CRAFT_END = self.getSlotCount() - 1;
 		
 		InventoryBuilder.S_ARMOR_START = self.getSlotCount();
         for (i = 0; i < Const.armorSize; ++i)
