@@ -14,4 +14,7 @@ public class ModConfig
 	
 	public static int filterRange; 
 	public static int expPerBottle;
+	
+	
+	
 }

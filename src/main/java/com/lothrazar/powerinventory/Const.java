@@ -38,10 +38,7 @@ public class Const
     public static final int compassSlot = enderPearlSlot+3;
     public static final int bottleSlot = enderPearlSlot+4;
     public static final int uncraftSlot = enderPearlSlot+5;
-    
      
-	public final static int INV_ENDER = 1;
-	public final static int INV_PLAYER = 2;
 	
 	public final static int SORT_LEFT = 1;
 	public final static int SORT_RIGHT = 2;

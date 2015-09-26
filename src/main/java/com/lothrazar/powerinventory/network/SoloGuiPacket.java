@@ -17,12 +17,12 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPacket, IMessage>
+public class SoloGuiPacket implements IMessage , IMessageHandler<SoloGuiPacket, IMessage>
 {
-	public EnderChestPacket() {}
+	public SoloGuiPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
 	
-	public EnderChestPacket(NBTTagCompound ptags)
+	public SoloGuiPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -40,17 +40,13 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 	}
  
 	@Override
-	public IMessage onMessage(EnderChestPacket message, MessageContext ctx)
+	public IMessage onMessage(SoloGuiPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 		 
- 		
-		if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
-			p.displayGUIChest(p.getInventoryEnderChest());
-		else 
-			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
-	 
-	
+		p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
+
+ 
 
 		return null;
 	}

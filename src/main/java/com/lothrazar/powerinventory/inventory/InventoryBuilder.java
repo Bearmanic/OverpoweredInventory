@@ -7,7 +7,7 @@ import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonDump;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonExp;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonFilter;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
+import com.lothrazar.powerinventory.inventory.client.GuiOpenEnder;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonUnc;
 import com.lothrazar.powerinventory.inventory.slot.SlotBottle;
@@ -107,10 +107,10 @@ public class InventoryBuilder
 		btnUncraft.visible = btnUncraft.enabled;
 		self.btnUncraft(btnUncraft);
 
-		GuiButtonOpenInventory btnEnder = new GuiButtonOpenInventory(button_id++, 
+		GuiOpenEnder btnEnder = new GuiOpenEnder(button_id++, 
 				self.guiLeft() + InventoryBuilder.echestX + 19, 
 				self.guiTop() + InventoryBuilder.echestY - 1,
-				12,height, "I",Const.INV_ENDER); 
+				12,height); 
 		buttonList.add(btnEnder); 
 		btnEnder.enabled = false;// turn it on based on ender chest present or not
 		btnEnder.visible = btnEnder.enabled;

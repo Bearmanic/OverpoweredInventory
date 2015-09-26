@@ -37,7 +37,8 @@ import org.apache.logging.log4j.Level;
 
 import com.lothrazar.powerinventory.inventory.GuiOverpoweredPlayer;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
-import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
+import com.lothrazar.powerinventory.inventory.client.GuiButtonSolo;
+import com.lothrazar.powerinventory.inventory.client.GuiOpenEnder; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
 import com.lothrazar.powerinventory.network.EnderPearlPacket;
 import com.lothrazar.powerinventory.network.EnderChestPacket;
@@ -154,8 +155,8 @@ public class EventHandler
 				
 				event.buttonList.add(new GuiButtonClose(button_id++, x,y,w,h));
 				
-				x = x - padding - w;
-				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,"E",Const.INV_PLAYER));
+				x = x - padding - w; // ,Const.INV_PLAYER
+				event.buttonList.add(new GuiButtonSolo(button_id++, x,y,w,h));
 				
 				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 				
