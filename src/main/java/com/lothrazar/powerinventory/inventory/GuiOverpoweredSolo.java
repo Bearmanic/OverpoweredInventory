@@ -12,13 +12,13 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiCustomPlayerInventory extends GuiContainer implements IOverpoweredGui
+public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 {
 	ResourceLocation res = new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE);
-	private final InventoryCustomPlayer inventory;
+	private final OverpoweredInventorySolo inventory;
 	private final EntityPlayer thePlayer;
 	
-	public GuiCustomPlayerInventory(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
+	public GuiOverpoweredSolo(EntityPlayer player, InventoryPlayer inventoryPlayer, OverpoweredInventorySolo inventoryCustom)
 	{
 		super(new OverpoweredContainerSolo(player, inventoryPlayer, inventoryCustom));
 		inventory = inventoryCustom;

@@ -28,10 +28,22 @@ import com.lothrazar.powerinventory.inventory.slot.SlotEnderPearl;
 
 public class OverpoweredContainerPlayer extends ContainerPlayer implements IOverpoweredContainer
 {	
+	@Override
+	public void addSlot(Slot s)
+	{
+        super.addSlotToContainer(s);
+	}
+	@Override
+	public int getSlotCount()
+	{
+		return inventorySlots.size();
+	}
+	
+	
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
     private final EntityPlayer thePlayer;
  
-	public BigInventoryPlayer invo;
+	public OverpoweredInventoryPlayer invo;
     public boolean isLocalWorld;
 
 	//these get used here for actual slot, and in GUI for texture
@@ -56,22 +68,26 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 	static int S_COMPASS;
 	static int S_BOTTLE;
 	static int S_UNCRAFT;
-	public OverpoweredContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
+	
+	public OverpoweredContainerPlayer(OverpoweredInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
-		
         this.thePlayer = player;
 		inventorySlots = Lists.newArrayList();//undo everything done by super()
 		craftMatrix = new InventoryCrafting(this, craftSize, craftSize);
  
+		InventoryBuilder.setupContainer(this);
+		
+		
+		OverpoweredContainerPlayer self = this;
+		
         int i,j,cx,cy;//rows and cols of vanilla, not extra
-   
-        S_RESULT = this.inventorySlots.size();
-        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
+        S_RESULT = self.getSlotCount();
+        self.addSlot(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
         		200,  
         		40));
-
-        S_CRAFT_START = this.inventorySlots.size();
+        
+        S_CRAFT_START = self.getSlotCount();
         for (i = 0; i < craftSize; ++i)
         { 
             for (j = 0; j < craftSize; ++j)
@@ -79,19 +95,20 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
     			cx = 114 + j * Const.square ; 
     			cy = 20 + i * Const.square ;
 
-        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
+    			self.addSlot(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
             }
         }
-        S_CRAFT_END = this.inventorySlots.size() - 1;
-        S_ARMOR_START = this.inventorySlots.size();
- 
+        S_CRAFT_END = self.getSlotCount() - 1;
+        
+        
+        S_ARMOR_START = self.getSlotCount();
         for (i = 0; i < Const.armorSize; ++i)
         {
         	cx = 8;
         	cy = 8 + i * Const.square;
             final int k = i;
  
-            this.addSlotToContainer(new Slot(playerInventory,  playerInventory.getSizeInventory() - 1 - i, cx, cy)
+            self.addSlot(new Slot(playerInventory,  playerInventory.getSizeInventory() - 1 - i, cx, cy)
             { 
             	public int getSlotStackLimit()
 	            {
@@ -109,17 +126,20 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 	            }
             }); 
         }
-        S_ARMOR_END = this.inventorySlots.size() - 1;
-        S_BAR_START = this.inventorySlots.size();
+        S_ARMOR_END = self.getSlotCount() - 1;
+        
+        S_BAR_START = self.getSlotCount();
         for (i = 0; i < Const.hotbarSize; ++i)
         { 
         	cx = 8 + i * Const.square;
         	cy = 142 + (Const.square * Const.MORE_ROWS);
  
-            this.addSlotToContainer(new Slot(playerInventory, i, cx, cy));
+        	self.addSlot(new Slot(playerInventory, i, cx, cy));
         }
-        S_BAR_END = this.inventorySlots.size() - 1;
-        S_MAIN_START = this.inventorySlots.size();
+        S_BAR_END = self.getSlotCount() - 1;
+        
+        
+        S_MAIN_START = self.getSlotCount();
         int slotIndex = Const.hotbarSize;
         
         for( i = 0; i < Const.ALL_ROWS; i++)
@@ -128,33 +148,35 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
             { 
             	cx = 8 + j * Const.square;
             	cy = 84 + i * Const.square;
-                this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
+            	self.addSlot(new Slot(playerInventory, slotIndex, cx, cy));
             	slotIndex++;
             }
         }
+        S_MAIN_END = self.getSlotCount() - 1;
         
-        S_MAIN_END = this.inventorySlots.size() - 1;
         
-        S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
+        S_PEARL =  self.getSlotCount() ;
+        self.addSlot(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
 
-        S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
+        S_ECHEST =  self.getSlotCount() ;
+        self.addSlot(new SlotEnderChest(playerInventory, Const.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
 
-        S_CLOCK =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
+        S_CLOCK =  self.getSlotCount();
+        self.addSlot(new SlotClock(playerInventory, Const.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
 
-        S_COMPASS =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
+        S_COMPASS = self.getSlotCount() ;
+        self.addSlot(new SlotCompass(playerInventory, Const.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
         
-        S_BOTTLE =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
+        S_BOTTLE = self.getSlotCount() ;
+        self.addSlot(new SlotBottle(playerInventory, Const.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
         
-        S_UNCRAFT =  this.inventorySlots.size() ;//TODO: should it work like crafting window and dump contents
-        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
+        S_UNCRAFT =self.getSlotCount() ;
+        self.addSlot(new Slot(playerInventory, Const.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
+
         
-        this.onCraftMatrixChanged(this.craftMatrix);
+        
 		this.invo = playerInventory; 
+        this.onCraftMatrixChanged(this.craftMatrix);
 	}
   
 	@Override

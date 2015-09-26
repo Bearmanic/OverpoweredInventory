@@ -18,7 +18,7 @@ import net.minecraft.util.ReportedException;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BigInventoryPlayer extends InventoryPlayer implements IOverpoweredInventory
+public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOverpoweredInventory
 {
     @SideOnly(Side.CLIENT)
     private ItemStack currentItemStack;
@@ -29,7 +29,7 @@ public class BigInventoryPlayer extends InventoryPlayer implements IOverpoweredI
     private ItemStack bottleStack;
     private ItemStack uncraftStack;
    
-	public BigInventoryPlayer(EntityPlayer player)
+	public OverpoweredInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
 		this.mainInventory = new ItemStack[Const.INVOSIZE + Const.hotbarSize];

@@ -3,8 +3,8 @@ package com.lothrazar.powerinventory;
 import java.util.HashMap;
 import java.util.UUID;
 
-import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
-import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
+import com.lothrazar.powerinventory.inventory.OverpoweredInventoryPlayer;
+import com.lothrazar.powerinventory.inventory.OverpoweredInventorySolo;
 import com.lothrazar.powerinventory.inventory.OverpoweredContainerPlayer;
 
 import net.minecraft.entity.Entity;
@@ -21,7 +21,7 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 public class PlayerProperties implements IExtendedEntityProperties
 {
 
-public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
+public final OverpoweredInventorySolo inventory = new OverpoweredInventorySolo();
 	
 	
 	public static final String ID = "II_BIG_INVO";
@@ -63,10 +63,10 @@ public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
 	 */
 	public void onJoinWorld()
 	{
-		if(!(player.inventory instanceof BigInventoryPlayer))
+		if(!(player.inventory instanceof OverpoweredInventoryPlayer))
 		{
-			player.inventory = new BigInventoryPlayer(player);
-			player.inventoryContainer = new OverpoweredContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
+			player.inventory = new OverpoweredInventoryPlayer(player);
+			player.inventoryContainer = new OverpoweredContainerPlayer((OverpoweredInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
 			player.openContainer = player.inventoryContainer;
 		}
 		
@@ -95,12 +95,12 @@ public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
 		this.inventory.readFromNBT(properties);
 		
 		
-		if(!(player.inventory instanceof BigInventoryPlayer))
+		if(!(player.inventory instanceof OverpoweredInventoryPlayer))
 		{
-			player.inventory = new BigInventoryPlayer(player);
-			player.inventoryContainer = new OverpoweredContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
+			player.inventory = new OverpoweredInventoryPlayer(player);
+			player.inventoryContainer = new OverpoweredContainerPlayer((OverpoweredInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
 			player.openContainer = player.inventoryContainer;
-			((BigInventoryPlayer)player.inventory).readFromNBT(properties.getTagList(Const.NBT_INVENTORY, 10));
+			((OverpoweredInventoryPlayer)player.inventory).readFromNBT(properties.getTagList(Const.NBT_INVENTORY, 10));
 		}
 	}
 	

@@ -12,12 +12,12 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-public class GuiBigInventory extends GuiInventory implements IOverpoweredGui
+public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGui
 {
 	private OverpoweredContainerPlayer container;
 	private EntityPlayer thePlayer;
 	
-	public GuiBigInventory(EntityPlayer player)
+	public GuiOverpoweredPlayer(EntityPlayer player)
 	{
 		super(player);
 		container = player.inventoryContainer instanceof OverpoweredContainerPlayer? (OverpoweredContainerPlayer)player.inventoryContainer : null;

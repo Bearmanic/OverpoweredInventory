@@ -16,11 +16,14 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 //import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -29,8 +32,10 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.WorldEvent; 
+
 import org.apache.logging.log4j.Level; 
-import com.lothrazar.powerinventory.inventory.GuiBigInventory;
+
+import com.lothrazar.powerinventory.inventory.GuiOverpoweredPlayer;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
@@ -38,8 +43,10 @@ import com.lothrazar.powerinventory.network.EnderPearlPacket;
 import com.lothrazar.powerinventory.network.EnderChestPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 /**
@@ -111,9 +118,9 @@ public class EventHandler
 	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event)
 	{
-		if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiBigInventory))
+		if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiOverpoweredPlayer))
 		{
-			event.gui = new GuiBigInventory(Minecraft.getMinecraft().thePlayer);
+			event.gui = new GuiOverpoweredPlayer(Minecraft.getMinecraft().thePlayer);
 		}
 	}
 	
@@ -327,4 +334,25 @@ public class EventHandler
 		tessellator.addVertexWithUV((double)(x),          (double)(y),           0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMinV());
 		tessellator.draw();
 	}
+	
+  
+    boolean sentVersionMessage = false;//only send it once
+
+    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+    public void onEvent(PlayerTickEvent event)
+    {
+        if (!sentVersionMessage && event.player.worldObj.isRemote 
+              && !ModInv.versionChecker.isLatestVersion()
+              &&  ModInv.versionChecker.getLatestVersion() != "")
+        {
+            ClickEvent url = new ClickEvent(ClickEvent.Action.OPEN_URL, 
+                  "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
+            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(url);
+            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new version out!  Click here to open the webpage with "+
+            			ModInv.versionChecker.getLatestVersion());
+            text.setChatStyle(clickableChatStyle);
+            event.player.addChatMessage(text);
+            sentVersionMessage = true;
+        } 
+    }
 }

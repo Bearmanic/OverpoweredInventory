@@ -121,12 +121,10 @@ public class InventoryBuilder
 		
 	}
 	
-	
 	public static void setupContainer(IOverpoweredContainer self)
 	{
 		
 	}
-	
 	
 	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
 	{

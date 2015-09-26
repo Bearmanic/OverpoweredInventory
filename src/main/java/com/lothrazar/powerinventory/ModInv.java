@@ -56,6 +56,8 @@ public class ModInv
 	public SimpleNetworkWrapper network ;
 	public static Logger logger;
 	public static Configuration config;
+	public static VersionChecker versionChecker ;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -76,14 +78,13 @@ public class ModInv
     	network.registerMessage(UncButtonPacket.class,   UncButtonPacket.class,  packetID++, Side.SERVER);
     	
     	proxy.registerHandlers();
-		MinecraftForge.EVENT_BUS.register(instance);
-		FMLCommonHandler.instance().bus().register(instance);
+		//MinecraftForge.EVENT_BUS.register(instance);
+		//FMLCommonHandler.instance().bus().register(instance);
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	//.instance()
     	 NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     	
     	 //then when you need to 
@@ -94,26 +95,7 @@ public class ModInv
     		Items.ender_pearl.setMaxStackSize(64);
     	}
     }
-    
-    
-    boolean sentVersionMessage = false;//only send it once
-    VersionChecker versionChecker ;
-    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-    public void onEvent(PlayerTickEvent event)
-    {
-        if (!sentVersionMessage && event.player.worldObj.isRemote 
-              && !versionChecker.isLatestVersion()
-              && versionChecker.getLatestVersion() != "")
-        {
-            ClickEvent url = new ClickEvent(ClickEvent.Action.OPEN_URL, 
-                  "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
-            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(url);
-            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new version out!  Click here to open the webpage with "+versionChecker.getLatestVersion());
-            text.setChatStyle(clickableChatStyle);
-            event.player.addChatMessage(text);
-            sentVersionMessage = true;
-        } 
-    }
+  
 
     
     @EventHandler

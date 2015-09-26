@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory;
 
-import com.lothrazar.powerinventory.inventory.GuiCustomPlayerInventory;
+import com.lothrazar.powerinventory.inventory.GuiOverpoweredSolo;
 import com.lothrazar.powerinventory.inventory.OverpoweredContainerSolo;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +24,7 @@ public class GuiHandler implements IGuiHandler
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z)
 	{ 
 		if (ID == GUI_CUSTOM_INV)
-			return new GuiCustomPlayerInventory(player, player.inventory, PlayerProperties.get(player).inventory);
+			return new GuiOverpoweredSolo(player, player.inventory, PlayerProperties.get(player).inventory);
 		else
 			return null;
 	}

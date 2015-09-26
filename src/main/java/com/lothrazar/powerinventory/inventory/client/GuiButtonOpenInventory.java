@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.inventory.GuiBigInventory;
+import com.lothrazar.powerinventory.inventory.GuiOverpoweredPlayer;
 import com.lothrazar.powerinventory.network.EnderChestPacket;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
@@ -35,7 +35,7 @@ public class GuiButtonOpenInventory extends GuiButton
     		case Const.INV_PLAYER:
 
         		//some GUI's open on client side to initiate, and propogate to server internally
-    			Minecraft.getMinecraft().displayGuiScreen(new GuiBigInventory(mc.thePlayer));
+    			Minecraft.getMinecraft().displayGuiScreen(new GuiOverpoweredPlayer(mc.thePlayer));
     			break;
     		case Const.INV_ENDER:
     			//other GUI's have to be hit from server side first to open
