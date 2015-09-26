@@ -428,4 +428,20 @@ public class InventoryBuilder
 		tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
         tessellator.draw();
 	}
+
+	public static void onContainerClosed(EntityPlayer playerIn,	InventoryCrafting craftMatrix, IInventory craftResult)
+	{ 
+// we COULD not empty it BUT then it gets erased on logout, etc
+        for (int i = 0; i < Const.craftSize*Const.craftSize; ++i) // was 4
+        {
+            ItemStack itemstack = craftMatrix.getStackInSlotOnClosing(i);
+
+            if (itemstack != null)
+            {
+                playerIn.dropPlayerItemWithRandomChoice(itemstack, false);
+            }
+        }
+
+        craftResult.setInventorySlotContents(0, (ItemStack)null);
+	}
 }

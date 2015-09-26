@@ -80,24 +80,12 @@ public class OverpoweredContainerSolo extends Container  implements IOverpowered
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
-        //TODO: move to InventoryBuilder
-// we COULD not empty it BUT then it gets erased on logout, etc
-        for (int i = 0; i < Const.craftSize*Const.craftSize; ++i) // was 4
-        {
-            ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
-
-            if (itemstack != null)
-            {
-                playerIn.dropPlayerItemWithRandomChoice(itemstack, false);
-            }
-        }
-
-        this.craftResult.setInventorySlotContents(0, (ItemStack)null);
+        InventoryBuilder.onContainerClosed(playerIn,craftMatrix,craftResult);
     }
+	
 	@Override
 	public boolean canInteractWith(EntityPlayer player)
 	{
-
 		return true;
 	}
 	
