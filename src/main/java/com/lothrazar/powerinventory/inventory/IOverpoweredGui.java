@@ -20,4 +20,6 @@ public interface IOverpoweredGui
 	//getters for privates
 	public int guiLeft();
 	public int guiTop();
+	
+	
 }

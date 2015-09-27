@@ -176,4 +176,10 @@ public class OverpoweredInventorySolo implements IInventory, IOverpoweredInvento
 			}
 		}
 	}
+	
+	@Override
+	public ItemStack getStack(int slot)
+	{
+		return getStackInSlot(slot);
+	}
 }

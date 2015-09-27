@@ -16,12 +16,14 @@ import org.lwjgl.opengl.GL11;
 public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGui
 {
 	private OverpoweredContainerPlayer container;
+	IOverpoweredInventory inventory;
 	private EntityPlayer thePlayer;
 	
 	public GuiOverpoweredPlayer(EntityPlayer player)
 	{
 		super(player);
 		container = player.inventoryContainer instanceof OverpoweredContainerPlayer? (OverpoweredContainerPlayer)player.inventoryContainer : null;
+		inventory = container.invo;
 		this.xSize = Const.texture_width;
 		this.ySize = Const.texture_height;
 		thePlayer = player;
@@ -38,63 +40,6 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 		}
     }
 	
-	private void checkSlotsEmpty()
-	{
-		final int s = 16;
-		TextureManager tm = this.mc.getTextureManager();
-		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
-		{
-			btnEnder().enabled = false;
-			btnEnder().visible = btnEnder.enabled;
- 
-			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_enderchest.png",InventoryBuilder.echestX, InventoryBuilder.echestY,s,s); 
-		}
-		else 
-		{ 
-			btnEnder().enabled = true; 
-			btnEnder().visible = btnEnder.enabled;
-		}
-		
-		if(container.invo.getStackInSlot(Const.uncraftSlot) == null)
-		{ 
-			btnUncraft().enabled = false;
-			btnUncraft().visible = btnUncraft.enabled; 
-		}
-		else 
-		{ 
-			btnUncraft().enabled = true; 
-			btnUncraft().visible = btnUncraft.enabled;
-		}
-		
-		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
-		   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
-		{
-			btnExp().enabled = false;
-			btnExp().visible = btnExp.enabled;
-  
-			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_bottle.png",InventoryBuilder.bottleX, InventoryBuilder.bottleY,s,s); 
-		}
-		else 
-		{ 
-			btnExp().enabled = true; 
-			btnExp().visible = btnExp.enabled;
-		}
-
-		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
-		{  
-			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_enderpearl.png",InventoryBuilder.pearlX, InventoryBuilder.pearlY,s,s);
-		}
-
-		if(container.invo.getStackInSlot(Const.compassSlot) == null)
-		{ 
-			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_compass.png",InventoryBuilder.compassX, InventoryBuilder.compassY,s,s);
-		}
-
-		if(container.invo.getStackInSlot(Const.clockSlot) == null)
-		{  
-			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_clock.png",InventoryBuilder.clockX, InventoryBuilder.clockY,s,s);
-		}
-	}
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
@@ -112,11 +57,15 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
-		this.checkSlotsEmpty();
+		
+		InventoryBuilder.checkSlotsEmpty(this,inventory,this.mc.getTextureManager());
+			
+		 
 		 
 		//this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 		
 /*
+ //TESTING AREA
 		Slot s;
 		int show;
 		for(Object o : this.container.inventorySlots)

@@ -45,6 +45,8 @@ public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 	protected void drawGuiContainerForegroundLayer(	int p_146976_2_, int p_146976_3_)
 	{ 
 		//drawing text and such on screen
+
+		InventoryBuilder.checkSlotsEmpty(this,inventory,this.mc.getTextureManager());
 	}
 	
 	@Override
@@ -100,4 +102,5 @@ public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 	{
 		return this.guiTop;
 	}
+
 }

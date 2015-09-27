@@ -70,6 +70,64 @@ public class InventoryBuilder
 	public static int S_UNCRAFT;
 	
 	
+	public static void checkSlotsEmpty(IOverpoweredGui self, IOverpoweredInventory invo, TextureManager tm)
+	{
+		final int s = 16;
+
+		if(invo.getStack(Const.enderChestSlot) == null)
+		{
+			self.btnEnder().enabled = false;
+			self.btnEnder().visible = false;
+ 
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_enderchest.png",InventoryBuilder.echestX, InventoryBuilder.echestY,s,s); 
+		}
+		else 
+		{ 
+			self.btnEnder().enabled = true; 
+			self.btnEnder().visible = true;
+		}
+		
+		if(invo.getStack(Const.uncraftSlot) == null)
+		{ 
+			self.btnUncraft().enabled = false;
+			self.btnUncraft().visible = false; 
+		}
+		else 
+		{ 
+			self.btnUncraft().enabled = true; 
+			self.btnUncraft().visible = true;
+		}
+		
+		if(invo.getStack(Const.bottleSlot) == null || 
+		   invo.getStack(Const.bottleSlot).getItem() == Items.experience_bottle	)
+		{
+			self.btnExp().enabled = false;
+			self.btnExp().visible = false;
+  
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_bottle.png",InventoryBuilder.bottleX, InventoryBuilder.bottleY,s,s); 
+		}
+		else 
+		{ 
+			self.btnExp().enabled = true; 
+			self.btnExp().visible = true;
+		}
+
+		if(invo.getStack(Const.enderPearlSlot) == null)
+		{  
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_enderpearl.png",InventoryBuilder.pearlX, InventoryBuilder.pearlY,s,s);
+		}
+
+		if(invo.getStack(Const.compassSlot) == null)
+		{ 
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_compass.png",InventoryBuilder.compassX, InventoryBuilder.compassY,s,s);
+		}
+
+		if(invo.getStack(Const.clockSlot) == null)
+		{  
+			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_clock.png",InventoryBuilder.clockX, InventoryBuilder.clockY,s,s);
+		}
+		
+	}
 	
 	@SuppressWarnings("unchecked")
 	public static void setupGui(IOverpoweredGui self, EntityPlayer thePlayer, List buttonList)

@@ -10,9 +10,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class GuiOpenEnder extends GuiButton 
 { 
     public GuiOpenEnder(int buttonId, int x, int y, int w,int h)

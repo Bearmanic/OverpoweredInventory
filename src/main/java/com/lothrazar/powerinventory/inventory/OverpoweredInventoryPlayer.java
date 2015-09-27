@@ -637,4 +637,10 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
             }
         }
     }
+
+	@Override
+	public ItemStack getStack(int slot)
+	{
+		return getStackInSlot(slot);
+	}
 }
