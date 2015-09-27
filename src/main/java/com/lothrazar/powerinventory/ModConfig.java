@@ -1,7 +1,13 @@
 package com.lothrazar.powerinventory;
+
+import net.minecraftforge.common.config.Configuration;
  
 public class ModConfig
 {  
+	public static Configuration config;
+	
+	
+	
 	public static boolean showSortButtons;
 	public static boolean showCornerButtons;
 	public static boolean showCharacter;
@@ -15,6 +21,77 @@ public class ModConfig
 	public static int filterRange; 
 	public static int expPerBottle;
 	
+
+	public static void loadConfig() 
+	{
+		
 	
+    	config.load();
+    	 
+    	String category = Configuration.CATEGORY_GENERAL;
+		
+    	ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
+		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
+		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
+		ModConfig.showCornerButtons = config.getBoolean("show_corner_buttons",category,true,"Show or hide the corner inventory buttons in other GUI's");
+		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
+		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
+		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
+		  
+		
+		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18");
+ 
+		/*if(ModConfig.smallMedLarge == "large")//only place magics get used
+		{
+			 
+	 //testing
+
+			Const.MORE_ROWS = 15;
+		 
+			Const.MORE_COLS = 2*9;
+
+			Const.texture_width = 464;
+			Const.texture_height = 382;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_18x27.png";//18x27
+		}
+		else 
+			*/if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
+		{
+
+			Const.MORE_ROWS = 12;//texture 15x25
+		 
+			Const.MORE_COLS = 16;
+
+			Const.texture_width = 464;
+			Const.texture_height = 382;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";//375 total
+		}	//12x18 is abandoned
+		else//assume its small
+		{
+			Const.MORE_ROWS = 3;
+		 
+			Const.MORE_COLS = 9;
+
+			Const.texture_width = 338;
+			Const.texture_height = 221;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
+		}
+
+		Const.ALL_COLS = 9 + Const.MORE_COLS;
+		Const.ALL_ROWS = 3 + Const.MORE_ROWS;
+		
+		Const.sizeGrid  = Const.ALL_COLS * Const.ALL_ROWS;
+		Const.sizeGridHotbar = Const.sizeGrid + Const.hotbarSize; 
+		Const.sizeGridHotbarExtras = Const.sizeGridHotbar + Const.extras;
+		
+		Const.enderPearlSlot = Const.sizeGridHotbarExtras - 1; //was just arbitrarily 77777
+	    Const.enderChestSlot = Const.sizeGridHotbarExtras - 2;
+	    Const.clockSlot = Const.sizeGridHotbarExtras - 3;
+	    Const.compassSlot = Const.sizeGridHotbarExtras - 4;
+	    Const.bottleSlot = Const.sizeGridHotbarExtras - 5;
+	    Const.uncraftSlot = Const.sizeGridHotbarExtras - 6;// six extra slots
+		
+		if(config.hasChanged()){config.save();}
+	}
 	
 }

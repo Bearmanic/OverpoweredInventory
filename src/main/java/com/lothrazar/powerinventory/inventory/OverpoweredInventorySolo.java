@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class OverpoweredInventorySolo implements IInventory, IOverpoweredInventory
 { 
-	ItemStack[] mainInventory = new ItemStack[Const.sizeGridHotbar];
+	ItemStack[] mainInventory = new ItemStack[Const.sizeGridHotbarExtras];
 //thanks for http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
 	private final String tagName = "opinvtags";
 	private final String tagSlot = "Slot";

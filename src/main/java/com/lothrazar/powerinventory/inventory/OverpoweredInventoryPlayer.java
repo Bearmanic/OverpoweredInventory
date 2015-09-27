@@ -22,17 +22,19 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 {
     @SideOnly(Side.CLIENT)
     private ItemStack currentItemStack;
+    /*
     private ItemStack enderPearlStack;
     private ItemStack enderChestStack;
     private ItemStack clockStack;
     private ItemStack compassStack;
     private ItemStack bottleStack;
     private ItemStack uncraftStack;
-   
+   */
 	public OverpoweredInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
-		this.mainInventory = new ItemStack[Const.sizeGridHotbar];
+		
+		this.mainInventory = new ItemStack[Const.sizeGridHotbarExtras];
  
 		if(player.inventory != null)
 		{
@@ -53,20 +55,31 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
     {
         ItemStack[] aitemstack = this.mainInventory;
         //check these first, otherwise it crashes thinking they are armor
+        /*
         if(index == Const.enderPearlSlot){return enderPearlStack;}
         if(index == Const.enderChestSlot){return enderChestStack;} 
         if(index == Const.clockSlot){return clockStack;}
         if(index == Const.compassSlot){return compassStack;} 
         if(index == Const.bottleSlot){return bottleStack;} 
         if(index == Const.uncraftSlot){return uncraftStack;} 
-        
+        */
         if (index >= aitemstack.length)
         {
             index -= aitemstack.length;
             aitemstack = this.armorInventory;
         }
-        if(index>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
+        
+        if(index >= aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
 
+        if(index >= Const.sizeGridHotbar)
+        {
+        	if(aitemstack[index] != null)
+        	{
+            	System.out.println("get big slot "+index);
+        		System.out.println("    "+aitemstack[index].getUnlocalizedName());
+        	}
+        }
+        
         return aitemstack[index];
     }
 	
@@ -82,7 +95,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 		if(this.player.capabilities.isCreativeMode && this.player.worldObj.isRemote)
 		{
             Minecraft.getMinecraft().playerController.sendSlotPacket(stack, slot);
-		}
+		}/*
 		if(slot == Const.enderPearlSlot)
 		{
 			enderPearlStack = stack;  
@@ -106,11 +119,20 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 		else if(slot == Const.uncraftSlot)
 		{
 			this.uncraftStack = stack;  
-		}
-		else
-		{
+		}*/
+		//else
+		//{
+		if(slot >= Const.sizeGridHotbar)
+        {
+        	
+        	if( stack != null)
+        	{
+            	System.out.println("setInventorySlotContents "+ slot);
+        		System.out.println("    " + stack.getUnlocalizedName());
+        	}
+        }
 			super.setInventorySlotContents(slot, stack);
-		}
+		//}
     }
 	
 	public int getSlotsNotArmor()
@@ -191,7 +213,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
             k = this.func_146029_c(item);
         }
 
-        if (k >= 0 && k < 9)
+        if (k >= 0 && k < 9) // hotbar ??
         {
             this.currentItem = k;
         }
@@ -201,7 +223,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
             {
                 int j = this.getFirstEmptyStack();
 
-                if (j >= 0 && j < 9)
+                if (j >= 0 && j < 9)// hotbar ??
                 {
                     this.currentItem = j;
                 }
@@ -411,7 +433,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
                 tags.appendTag(nbttagcompound);
             }
         }
-
+/*
         if(this.enderChestStack != null)
         {
         	nbttagcompound = new NBTTagCompound();
@@ -454,7 +476,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
             this.uncraftStack.writeToNBT(nbttagcompound);
             tags.appendTag(nbttagcompound);
         }
-
+*/
         for (i = 0; i < this.armorInventory.length; ++i)
         {
             if (this.armorInventory[i] != null)
@@ -469,7 +491,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
         
         return tags;
     }
-    
+    /*
     @Override
     public ItemStack decrStackSize(int index, int count)
     {
@@ -583,7 +605,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
     	}
     	else 
     		return super.decrStackSize(index, count);
-    }
+    }*/
 
     /**
      * Modified from the original to allow for more than 255 inventory slots
@@ -601,7 +623,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
             ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
 
             if (itemstack != null)
-            {
+            {/*
             	if(j == Const.enderPearlSlot)
             	{
             		enderPearlStack = itemstack;
@@ -625,7 +647,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
             	if(j == Const.uncraftSlot)
                 {
             		this.uncraftStack = itemstack;
-                }
+                }*/
                 if (j >= 0 && j < this.mainInventory.length)
                 {
             		this.mainInventory[j] = itemstack;

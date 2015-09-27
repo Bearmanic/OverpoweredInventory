@@ -43,13 +43,13 @@ public class Const
 	
 
 	//these are slot indices. different than slot numbers (important)
-    public static final int enderPearlSlot = 77777; 
-    public static final int enderChestSlot = enderPearlSlot+1;
-    public static final int clockSlot = enderPearlSlot+2;
-    public static final int compassSlot = enderPearlSlot+3;
-    public static final int bottleSlot = enderPearlSlot+4;
-    public static final int uncraftSlot = enderPearlSlot+5;// six extra slots
-    public static final int extras = 6;
+    public static int enderPearlSlot = sizeGridHotbarExtras - 1; //was just arbitrarily 77777
+    public static int enderChestSlot = sizeGridHotbarExtras - 2;
+    public static int clockSlot = sizeGridHotbarExtras - 3;
+    public static int compassSlot = sizeGridHotbarExtras - 4;
+    public static int bottleSlot = sizeGridHotbarExtras - 5;
+    public static int uncraftSlot = sizeGridHotbarExtras - 6;// six extra slots
+    public static int extras = 6;
      
 	
 	public final static int SORT_LEFT = 1;
