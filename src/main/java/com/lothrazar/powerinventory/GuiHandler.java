@@ -11,6 +11,11 @@ public class GuiHandler implements IGuiHandler
 {
 	private static int modGuiIndex = 0;
 	public static final int GUI_CUSTOM_INV = modGuiIndex++;
+
+	 //then when you need to 
+	 //player.openGui(TutorialMain.instance, guiID, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+	 
+	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world,	int x, int y, int z)
 	{ 

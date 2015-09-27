@@ -339,7 +339,8 @@ public class EventHandler
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(PlayerTickEvent event)
     {
-        if (!sentVersionMessage && event.player.worldObj.isRemote 
+        if (ModConfig.enableVersionChecker && ModInv.versionChecker != null  
+        	  && 	!sentVersionMessage && event.player.worldObj.isRemote 
               && !ModInv.versionChecker.isLatestVersion()
               &&  ModInv.versionChecker.getLatestVersion() != "")
         {

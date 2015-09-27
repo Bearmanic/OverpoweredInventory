@@ -8,6 +8,13 @@ public class ModConfig
 	
 	//settings from the (public) config file
 	
+
+	public static boolean enableVersionChecker;  
+	public static boolean enableCompatMode;  
+
+	public static boolean enableUncrafting; //TODO in config file default true
+	public static boolean enableEnchantBottling; //TODO in config file default false. 
+	
 	public static boolean showSortButtons;
 	public static boolean showCornerButtons;
 	public static boolean showCharacter;
@@ -69,11 +76,25 @@ public class ModConfig
 		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
-		  
+		
+		ModConfig.enableVersionChecker = config.getBoolean("enable_version_checker",category,true,"Check once when you log in to see if there is a new version of the mod available.");
 		
 		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18");
- 
+		 
+		
+		category = "Compatibility";
+		
+		config.addCustomCategoryComment(category, "Only use this if your game is crashing due to other mods also trying to modify and/or replace the players default inventory at the same time.");
+		
+		ModConfig.enableCompatMode = config.getBoolean("enable_compat_mode",category,false,"By setting this to true, your default player inventory will be reverted back to the plain old normal one, meaning you can only access a limited version of the Overpowered Inventory through the upper right corner button.");
+		
+		
 		//if(ModConfig.smallMedLarge == "large")//TODO: possible new feature 
+		
+		
+		//TODO: should we split areas of code, that is, above is creating/reading the config file
+		//all below is using those numbers to build out the inventory stats, like the below should
+		//be in InventoryBuilder.init
 
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{

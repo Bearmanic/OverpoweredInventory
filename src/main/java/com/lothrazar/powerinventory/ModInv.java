@@ -58,7 +58,6 @@ public class ModInv
 		ModConfig.config = new Configuration(event.getSuggestedConfigurationFile(), true);
 		ModConfig.loadConfig();
 
-    	
     	int packetID = 0;
     	network.registerMessage(EnderChestPacket.class,  EnderChestPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(SortButtonPacket.class,  SortButtonPacket.class,  packetID++, Side.SERVER);
@@ -70,8 +69,6 @@ public class ModInv
     	network.registerMessage(SoloGuiPacket.class,     SoloGuiPacket.class,     packetID++, Side.SERVER);
     	
     	proxy.registerHandlers();
-		//MinecraftForge.EVENT_BUS.register(instance);
-		//FMLCommonHandler.instance().bus().register(instance);
     }
 
     @EventHandler
@@ -79,22 +76,20 @@ public class ModInv
     {
     	 NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     	
-    	 //then when you need to 
-    	 //player.openGui(TutorialMain.instance, guiID, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
-    	 
     	if(ModConfig.enderPearl64)
     	{
     		Items.ender_pearl.setMaxStackSize(64);
     	}
     }
   
-
-    
     @EventHandler
     public void postInit(FMLPostInitializationEvent  event)
     {
-    	versionChecker = new VersionChecker();
-    	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
-    	versionCheckThread.start();
+    	if(ModConfig.enableVersionChecker)
+    	{
+	    	versionChecker = new VersionChecker();
+	    	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
+	    	versionCheckThread.start();
+    	}
     }
 }
