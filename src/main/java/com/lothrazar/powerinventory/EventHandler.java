@@ -116,10 +116,11 @@ public class EventHandler
 	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event)
 	{
-		if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiOverpoweredPlayer))
-		{
-			event.gui = new GuiOverpoweredPlayer(Minecraft.getMinecraft().thePlayer);
-		}
+		if(ModConfig.enableCompatMode == false)
+			if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiOverpoweredPlayer))
+			{
+				event.gui = new GuiOverpoweredPlayer(Minecraft.getMinecraft().thePlayer);
+			}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -131,13 +132,18 @@ public class EventHandler
 
 		if(ModConfig.showCornerButtons)
 		{
+			
+			boolean showForPlayer = ModConfig.enableCompatMode
+					&& ( event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory);
+			
 			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBeacon || 
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiCrafting || 
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
+			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory || 
+			   showForPlayer
 			   )
 			{
 				int button_id = 256;

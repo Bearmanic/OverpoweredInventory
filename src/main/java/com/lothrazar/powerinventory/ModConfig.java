@@ -121,6 +121,13 @@ public class ModConfig
 		    textureSoloInventory = "textures/gui/inventory_6x18_solo.png";
 		}
 
+		//compat mode isnt working with mismatched sizes, so try it out like this
+		if(ModConfig.enableCompatMode)
+		{
+			moreCols = 0;
+			moreRows = 0;
+		}
+		
 		allCols = 9 + moreCols;
 		allRows = 3 + moreRows;
 		

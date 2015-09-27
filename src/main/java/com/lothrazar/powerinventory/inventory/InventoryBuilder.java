@@ -217,10 +217,26 @@ public class InventoryBuilder
 		
 	}
 	
-	public static void setupContainer(IOverpoweredContainer self,final EntityPlayer thePlayer,IInventory playerInventory, 
+	public static void setupContainer(IOverpoweredContainer self,final EntityPlayer thePlayer,
+			IInventory invo, // this is a InventoryPlayer from player.inventory. could be OP (or regular if compat)
 			InventoryCrafting craftMatrix,
-			IInventory craftResult)
+			IInventory craftResult,
+			OverpoweredInventorySolo inventorySelf//refers to either the OP player inv, or the OP solo inv
+			)
 	{
+		
+		
+		//IInventory invo;
+		
+		//if(ModConfig.enableCompatMode)	
+		//	invo = inventorySelf;
+		//else
+		//	invo = playerInvo;
+		
+		//if(self instanceof OverpoweredContainerSolo)
+			//System.out.println("setupContainer OverpoweredContainerSolo");
+		
+		
 		 int i,j,cx,cy;//rows and cols of vanilla, not extra
         
         InventoryBuilder.S_RESULT = self.getSlotCount();
@@ -248,7 +264,7 @@ public class InventoryBuilder
         	cy = 8 + i * Const.SQ;
             final int k = i;
  
-            self.addSlot(new Slot(playerInventory,  ModConfig.sizeGrid - 1 - i, cx, cy)
+            self.addSlot(new Slot(invo,  ModConfig.sizeGrid - 1 - i, cx, cy)
             { 
             	public int getSlotStackLimit()
 	            {
@@ -274,7 +290,7 @@ public class InventoryBuilder
         	cx = 8 + i * Const.SQ;
         	cy = 142 + (Const.SQ * ModConfig.moreRows);
  
-        	self.addSlot(new Slot(playerInventory, i, cx, cy));
+        	self.addSlot(new Slot(invo, i, cx, cy));
         }
         InventoryBuilder.S_BAR_END = self.getSlotCount() - 1;
         
@@ -288,7 +304,27 @@ public class InventoryBuilder
             { 
             	cx = 8 + j * Const.SQ;
             	cy = 84 + i * Const.SQ;
-            	self.addSlot(new Slot(playerInventory, slotIndex, cx, cy));
+            	
+            	System.out.println("playerInventory addSlot = "+slotIndex);
+            	System.out.println("player mainInventory.length = "+thePlayer.inventory.mainInventory.length);
+            	self.addSlot(new Slot(inventorySelf, slotIndex, cx, cy));
+            	
+            	//if(slotIndex < thePlayer.inventory.mainInventory.length)
+            	//	self.addSlot(new Slot(invo, slotIndex, cx, cy));
+            	//else
+            	//	self.addSlot(new Slot(inventorySelf, slotIndex, cx, cy));
+            	
+            	//doesnt IOverpoweredContainer have an inv?
+            	
+            	//if(ModConfig.enableCompatMode)
+            	//	self.addSlot(new Slot(inventorySelf, slotIndex, cx, cy));
+            	//else
+            	//	self.addSlot(new Slot(invo, slotIndex, cx, cy));
+            	
+            	
+            	
+            	//self.addSlot(new Slot(invo, slotIndex, cx, cy));
+            	
             	slotIndex++;
             }
         }
@@ -296,22 +332,22 @@ public class InventoryBuilder
         
         
         InventoryBuilder.S_PEARL =  self.getSlotCount() ;
-        self.addSlot(new SlotEnderPearl(playerInventory, ModConfig.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
+        self.addSlot(new SlotEnderPearl(invo, ModConfig.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
 
         InventoryBuilder.S_ECHEST =  self.getSlotCount() ;
-        self.addSlot(new SlotEnderChest(playerInventory, ModConfig.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
+        self.addSlot(new SlotEnderChest(invo, ModConfig.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
 
         InventoryBuilder.S_CLOCK =  self.getSlotCount();
-        self.addSlot(new SlotClock(playerInventory, ModConfig.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
+        self.addSlot(new SlotClock(invo, ModConfig.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
 
         InventoryBuilder.S_COMPASS = self.getSlotCount() ;
-        self.addSlot(new SlotCompass(playerInventory, ModConfig.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
+        self.addSlot(new SlotCompass(invo, ModConfig.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
         
         InventoryBuilder.S_BOTTLE = self.getSlotCount() ;
-        self.addSlot(new SlotBottle(playerInventory, ModConfig.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
+        self.addSlot(new SlotBottle(invo, ModConfig.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
         
         InventoryBuilder.S_UNCRAFT =self.getSlotCount() ;
-        self.addSlot(new Slot(playerInventory, ModConfig.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
+        self.addSlot(new Slot(invo, ModConfig.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
 
         
 	}

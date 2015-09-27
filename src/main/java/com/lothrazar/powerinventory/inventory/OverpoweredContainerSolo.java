@@ -44,8 +44,8 @@ public class OverpoweredContainerSolo extends Container  implements IOverpowered
 		thePlayer = player;
 		inventorySlots = Lists.newArrayList();
 		craftMatrix = new InventoryCrafting(this,  Const.SIZE_CRAFT,  Const.SIZE_CRAFT);
-		 
-		InventoryBuilder.setupContainer(this,thePlayer,playerInventory,craftMatrix,craftResult);
+		 System.out.println("OverpoweredContainerSolo constr");
+		InventoryBuilder.setupContainer(this,thePlayer,playerInventory,craftMatrix,craftResult,inventoryCustom);
 
         this.onCraftMatrixChanged(this.craftMatrix);
 	}
