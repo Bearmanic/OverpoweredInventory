@@ -69,7 +69,7 @@ public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 	@Override
 	public void btnEnder(GuiButton b)
 	{
-		btnExp=b;
+		btnEnder=b;
 	}
 	@Override
 	public GuiButton btnExp()
