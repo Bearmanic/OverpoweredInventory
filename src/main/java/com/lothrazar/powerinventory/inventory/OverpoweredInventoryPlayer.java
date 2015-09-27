@@ -23,14 +23,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 {
     @SideOnly(Side.CLIENT)
     private ItemStack currentItemStack;
-    /*
-    private ItemStack enderPearlStack;
-    private ItemStack enderChestStack;
-    private ItemStack clockStack;
-    private ItemStack compassStack;
-    private ItemStack bottleStack;
-    private ItemStack uncraftStack;
-   */
+ 
 	public OverpoweredInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
@@ -55,31 +48,23 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 	public ItemStack getStackInSlot(int index)
     {
         ItemStack[] aitemstack = this.mainInventory;
-        //check these first, otherwise it crashes thinking they are armor
-        /*
-        if(index == Const.enderPearlSlot){return enderPearlStack;}
-        if(index == Const.enderChestSlot){return enderChestStack;} 
-        if(index == Const.clockSlot){return clockStack;}
-        if(index == Const.compassSlot){return compassStack;} 
-        if(index == Const.bottleSlot){return bottleStack;} 
-        if(index == Const.uncraftSlot){return uncraftStack;} 
-        */
+     
         if (index >= aitemstack.length)
         {
             index -= aitemstack.length;
             aitemstack = this.armorInventory;
         }
         
-        if(index >= aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
-
+        if(index >= aitemstack.length){return null;}//happens when using config to switch sizes normal/small
+/*
         if(index >= ModConfig.sizeGridHotbar)
         {
         	if(aitemstack[index] != null)
         	{
-            	System.out.println("get big slot "+index);
+            	System.out.println("get big slot "+index + " _ length was "+mainInventory.length);
         		System.out.println("    "+aitemstack[index].getUnlocalizedName());
         	}
-        }
+        }*/
         
         return aitemstack[index];
     }
@@ -96,44 +81,19 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 		if(this.player.capabilities.isCreativeMode && this.player.worldObj.isRemote)
 		{
             Minecraft.getMinecraft().playerController.sendSlotPacket(stack, slot);
-		}/*
-		if(slot == Const.enderPearlSlot)
-		{
-			enderPearlStack = stack;  
 		}
-		else if(slot == Const.enderChestSlot)
-		{
-			enderChestStack = stack;  
-		}
-		else if(slot == Const.clockSlot)
-		{
-			clockStack = stack;  
-		}
-		else if(slot == Const.compassSlot)
-		{
-			compassStack = stack;  
-		}
-		else if(slot == Const.bottleSlot)
-		{
-			bottleStack = stack;  
-		}
-		else if(slot == Const.uncraftSlot)
-		{
-			this.uncraftStack = stack;  
-		}*/
-		//else
-		//{
 	
-		
+		/*
 		if(slot >= this.mainInventory.length)
 		{
         	System.out.println(">= length ?? setInventorySlotContents : "+ slot+ ">=" +  this.mainInventory.length);
 
         	if(stack != null)System.out.println(stack.getUnlocalizedName());
 			
-		}
-			super.setInventorySlotContents(slot, stack);
-		//}
+		}*/
+		
+		super.setInventorySlotContents(slot, stack);
+		
     }
 	
 	public int getSlotsNotArmor()
@@ -193,8 +153,6 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
         }
 
         return -1;
-        
- 
     }
     
     @SideOnly(Side.CLIENT)
@@ -434,50 +392,6 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
                 tags.appendTag(nbttagcompound);
             }
         }
-/*
-        if(this.enderChestStack != null)
-        {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderChestSlot);  
-            this.enderChestStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
-        }
-        if(this.enderPearlStack != null)
-        {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderPearlSlot);  
-            this.enderPearlStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
-        }
-        if(this.clockStack != null)
-        {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.clockSlot);  
-            this.clockStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
-        }
-        if(this.compassStack != null)
-        {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.compassSlot);  
-            this.compassStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
-        }
-        if(this.bottleStack != null)
-        {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.bottleSlot);  
-            this.bottleStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
-        }
-        if(this.uncraftStack != null)
-        {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.uncraftSlot);  
-            this.uncraftStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
-        }
-*/
         for (i = 0; i < this.armorInventory.length; ++i)
         {
             if (this.armorInventory[i] != null)
@@ -492,125 +406,6 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
         
         return tags;
     }
-    /*
-    @Override
-    public ItemStack decrStackSize(int index, int count)
-    {
-        ItemStack itemstack;
-//TODO: these ifelse brnaches are almost all identical. find a way to share code? make function?
-    	if(index == Const.enderChestSlot)
-    	{ 
-            itemstack = this.enderChestStack;
-            this.enderChestStack = null;
-            return itemstack;
-    	}    	
-    	else if(index == Const.enderPearlSlot)
-    	{
-    		 if (this.enderPearlStack.stackSize <= count)
-             {
-                 itemstack = this.enderPearlStack;
-                 this.enderPearlStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.enderPearlStack.splitStack(count);
-
-                 if (this.enderPearlStack.stackSize == 0)
-                 {
-                	 this.enderPearlStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}	
-    	else if(index == Const.clockSlot)
-    	{
-    		 if (this.clockStack.stackSize <= count)
-             {
-                 itemstack = this.clockStack;
-                 this.clockStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.clockStack.splitStack(count);
-
-                 if (this.clockStack.stackSize == 0)
-                 {
-                	 this.clockStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
-    	else if(index == Const.compassSlot)
-    	{
-    		 if (this.compassStack.stackSize <= count)
-             {
-                 itemstack = this.compassStack;
-                 this.compassStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.compassStack.splitStack(count);
-
-                 if (this.compassStack.stackSize == 0)
-                 {
-                	 this.compassStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
-    	else if(index == Const.bottleSlot)
-    	{
-    		 if (this.bottleStack.stackSize <= count)
-             {
-                 itemstack = this.bottleStack;
-                 this.bottleStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.bottleStack.splitStack(count);
-
-                 if (this.bottleStack.stackSize == 0)
-                 {
-                	 this.bottleStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
-    	else if(index == Const.uncraftSlot)
-    	{
-    		 if (this.uncraftStack.stackSize <= count)
-             {
-                 itemstack = this.uncraftStack;
-                 this.uncraftStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.uncraftStack.splitStack(count);
-
-                 if (this.uncraftStack.stackSize == 0)
-                 {
-                	 this.uncraftStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
-    	else 
-    		return super.decrStackSize(index, count);
-    }*/
-
-    /**
-     * Modified from the original to allow for more than 255 inventory slots
-     */
 	@Override
     public void readFromNBT(NBTTagList tags)
     {
@@ -624,31 +419,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
             ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
 
             if (itemstack != null)
-            {/*
-            	if(j == Const.enderPearlSlot)
-            	{
-            		enderPearlStack = itemstack;
-            	}
-            	if(j == Const.enderChestSlot)
-                {
-                	enderChestStack = itemstack;
-                }
-            	if(j == Const.clockSlot)
-                {
-                	clockStack = itemstack;
-                }
-            	if(j == Const.compassSlot)
-                {
-            		compassStack = itemstack;
-                }
-            	if(j == Const.bottleSlot)
-                {
-            		bottleStack = itemstack;
-                }
-            	if(j == Const.uncraftSlot)
-                {
-            		this.uncraftStack = itemstack;
-                }*/
+            {
                 if (j >= 0 && j < this.mainInventory.length)
                 {
             		this.mainInventory[j] = itemstack;

@@ -72,21 +72,9 @@ public class ModConfig
 		
 		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18");
  
-		/*if(ModConfig.smallMedLarge == "large")//only place magics get used
-		{
-			 
-	 //testing
+		//if(ModConfig.smallMedLarge == "large")//TODO: possible new feature 
 
-			Const.MORE_ROWS = 15;
-		 
-			Const.MORE_COLS = 2*9;
-
-			Const.texture_width = 464;
-			Const.texture_height = 382;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_18x27.png";//18x27
-		}
-		else 
-			*/if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
+		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
 
 			MORE_ROWS = 12;//texture 15x25
@@ -96,7 +84,7 @@ public class ModConfig
 			texture_width = 464;
 			texture_height = 382;
 		    INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";//375 total
-		}	//12x18 is abandoned
+		}	
 		else//assume its small
 		{
 			MORE_ROWS = 3;
@@ -115,9 +103,9 @@ public class ModConfig
 		sizeGridHotbar = sizeGrid + Const.hotbarSize; 
 		sizeGridHotbarExtras = sizeGridHotbar + extras;
 		
-		System.out.println(" sizeGrid  = "+sizeGrid);
+		/*System.out.println(" sizeGrid  = "+sizeGrid);
 		System.out.println(" sizeGridHotbar  = "+sizeGridHotbar);
-		System.out.println(" sizeGridHotbarExtras  = "+sizeGridHotbarExtras);
+		System.out.println(" sizeGridHotbarExtras  = "+sizeGridHotbarExtras);*/
 		
 		//i guess ender chest is at 121?
 		enderPearlSlot = sizeGridHotbarExtras - 1; //was just arbitrarily 77777
