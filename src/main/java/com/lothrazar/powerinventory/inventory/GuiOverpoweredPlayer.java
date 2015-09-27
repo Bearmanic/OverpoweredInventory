@@ -34,19 +34,19 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
     { 
 		super.initGui();
 		  
+		//TODO: also not if in compat mode
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
 			InventoryBuilder.setupGui(this, this.thePlayer,this.buttonList);
 		}
     }
 	
-	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModConfig.INVENTORY_TEXTURE));
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModConfig.texturePlayerInventory));
 
         InventoryBuilder.drawTexturedQuadFit(this.guiLeft(), this.guiTop(),ModConfig.texture_width,ModConfig.texture_height ,0);
  
@@ -57,13 +57,8 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
-		
 		InventoryBuilder.checkSlotsEmpty(this,inventory,this.mc.getTextureManager());
-			
-		 
-		 
-		//this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
-		
+	
 /*
  //TESTING AREA
 		Slot s;
@@ -81,8 +76,6 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 
 	}
 
-
-
 	private GuiButton btnEnder;
 	private GuiButton btnExp;
 	private GuiButton btnUncraft;
@@ -91,7 +84,6 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 	{
 		return btnEnder;
 	}
-
 	@Override
 	public void btnEnder(GuiButton b)
 	{

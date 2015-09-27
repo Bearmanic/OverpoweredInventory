@@ -193,7 +193,7 @@ public class UtilInventory
 		
 			if(chestItem != null) {   continue; }//  chest slot not empty, skip over it
 	 
-			for(int islotInv = Const.hotbarSize; islotInv < player.inventory.getSizeInventory() - Const.armorSize; islotInv++)
+			for(int islotInv = Const.SIZE_HOTBAR; islotInv < player.inventory.getSizeInventory() - Const.SIZE_ARMOR; islotInv++)
 			{
 				invItem = player.inventory.getStackInSlot(islotInv);
 				
@@ -229,7 +229,7 @@ public class UtilInventory
 		
 			if(chestItem == null) {   continue; }//  empty chest slot
 			 
-			for(int islotInv = Const.hotbarSize; islotInv < player.inventory.getSizeInventory() - Const.armorSize; islotInv++)
+			for(int islotInv = Const.SIZE_HOTBAR; islotInv < player.inventory.getSizeInventory() - Const.SIZE_ARMOR; islotInv++)
 			{
 			 
 				invItem = player.inventory.getStackInSlot(islotInv);
@@ -276,7 +276,7 @@ public class UtilInventory
 
 		ItemStack item;
 		
-		for(int i = invo.getSizeInventory() - (Const.armorSize + 1); i >= Const.hotbarSize;i--)
+		for(int i = invo.getSizeInventory() - (Const.SIZE_ARMOR + 1); i >= Const.SIZE_HOTBAR;i--)
 		{
 			item = invo.getStackInSlot(i);
 			
@@ -303,7 +303,7 @@ public class UtilInventory
 
 		ItemStack item;
 		
-		for(int i = Const.hotbarSize; i < invo.getSizeInventory() - Const.armorSize;i++)
+		for(int i = Const.SIZE_HOTBAR; i < invo.getSizeInventory() - Const.SIZE_ARMOR;i++)
 		{
 			item = invo.getStackInSlot(i);
 			
@@ -363,11 +363,11 @@ public class UtilInventory
 		
 		int iNew;
  
-		int END = invo.getSizeInventory() - Const.armorSize;
-		for(int i = Const.hotbarSize; i < END;i++)
+		int END = invo.getSizeInventory() - Const.SIZE_ARMOR;
+		for(int i = Const.SIZE_HOTBAR; i < END;i++)
 		{ 
 			 
-			if(i == END-1) iNew = Const.hotbarSize;
+			if(i == END-1) iNew = Const.SIZE_HOTBAR;
 			else iNew = i + 1;
 			
 			newLocations.put((Integer)iNew, invo.getStackInSlot(i));
@@ -390,11 +390,11 @@ public class UtilInventory
 		
 		int iNew;
  
-		int END = invo.getSizeInventory() - Const.armorSize;
-		for(int i = Const.hotbarSize; i < END;i++)
+		int END = invo.getSizeInventory() - Const.SIZE_ARMOR;
+		for(int i = Const.SIZE_HOTBAR; i < END;i++)
 		{ 
 			 
-			if(i == Const.hotbarSize) iNew = END-1;
+			if(i == Const.SIZE_HOTBAR) iNew = END-1;
 			else iNew = i - 1;
 			
 			newLocations.put((Integer)iNew, invo.getStackInSlot(i));
@@ -445,7 +445,7 @@ final static int SORT_ALPHI = 1;
 	{
 		int sortType = getNextSort(invo.player);
 
-		int iSize =  invo.getSizeInventory() - Const.armorSize;
+		int iSize =  invo.getSizeInventory() - Const.SIZE_ARMOR;
 
 		Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
 
@@ -453,7 +453,7 @@ final static int SORT_ALPHI = 1;
 		SortGroup temp;
 		String key = "";
 		
-		for(int i = Const.hotbarSize; i < iSize;i++)
+		for(int i = Const.SIZE_HOTBAR; i < iSize;i++)
 		{ 
 			item = invo.getStackInSlot(i);
 			if(item == null){continue;}
@@ -512,7 +512,7 @@ final static int SORT_ALPHI = 1;
 	        }
 	    });
 
-		int k = Const.hotbarSize;
+		int k = Const.SIZE_HOTBAR;
 		for (SortGroup p : sorted) 
 		{
 			//System.out.println(p.key+" "+p.stacks.size());

@@ -24,18 +24,12 @@ public class OverpoweredInventorySolo implements IInventory, IOverpoweredInvento
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot)
+	public ItemStack getStackInSlot(int index)
 	{
-		/*   
-		 //TODO: FIX just like O I Player
-		 ItemStack[] aitemstack = this.mainInventory;
-        //check these first, otherwise it crashes thinking they are armor
-        if(index == Const.enderPearlSlot){return enderPearlStack;}
-        if(index == Const.enderChestSlot){return enderChestStack;} 
-        if(index == Const.clockSlot){return clockStack;}
-        if(index == Const.compassSlot){return compassStack;} 
-        if(index == Const.bottleSlot){return bottleStack;} 
-        if(index == Const.uncraftSlot){return uncraftStack;} 
+		//TODO: this could be shared in the builder
+		//IF we let armor get in here. which maybe we should?
+		/*
+        ItemStack[] aitemstack = this.mainInventory;
         
         if (index >= aitemstack.length)
         {
@@ -44,13 +38,12 @@ public class OverpoweredInventorySolo implements IInventory, IOverpoweredInvento
         }
         if(index>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
 
-        return aitemstack[index];*/
-		if(slot > mainInventory.length)
-		{
-			System.out.println("bad invo "+slot);
-			return null;
-		}
-		return mainInventory[slot];
+        return aitemstack[index];
+        */
+		
+		//since theres no armor, do this right away
+		return mainInventory[index];
+		
 	}
 
 	@Override

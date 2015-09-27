@@ -41,13 +41,13 @@ public class InventoryBuilder
 	public static final int pearlX = 80; 
 	public static final int pearlY = 8; 
 	public static final int compassX = pearlX;
-	public static final int compassY = pearlY + Const.square;
+	public static final int compassY = pearlY + Const.SQ;
 	public static final int clockX = pearlX;
-	public static final int clockY = pearlY + 2*Const.square;
+	public static final int clockY = pearlY + 2*Const.SQ;
 	public static final int echestX = pearlX;
-	public static final int echestY = pearlY + 3*Const.square;
-	public static final int bottleX = ModConfig.texture_width - Const.square - padding - 1;
-	public static final int bottleY = 20 + 2 * Const.square;
+	public static final int echestY = pearlY + 3*Const.SQ;
+	public static final int bottleX = ModConfig.texture_width - Const.SQ - padding - 1;
+	public static final int bottleY = 20 + 2 * Const.SQ;
 	public static final int uncraftX = bottleX;
 	public static final int uncraftY = bottleY - 24;
 
@@ -230,23 +230,23 @@ public class InventoryBuilder
         		40));
         
         InventoryBuilder.S_CRAFT_START = self.getSlotCount();
-        for (i = 0; i < Const.craftSize; ++i)
+        for (i = 0; i < Const.SIZE_CRAFT; ++i)
         { 
-            for (j = 0; j < Const.craftSize; ++j)
+            for (j = 0; j < Const.SIZE_CRAFT; ++j)
             {  
-    			cx = 114 + j * Const.square ; 
-    			cy = 20 + i * Const.square ;
+    			cx = 114 + j * Const.SQ ; 
+    			cy = 20 + i * Const.SQ ;
 
-    			self.addSlot(new Slot(craftMatrix, j + i * Const.craftSize, cx , cy)); 
+    			self.addSlot(new Slot(craftMatrix, j + i * Const.SIZE_CRAFT, cx , cy)); 
             }
         }
         InventoryBuilder.S_CRAFT_END = self.getSlotCount() - 1;
 		
 		InventoryBuilder.S_ARMOR_START = self.getSlotCount();
-        for (i = 0; i < Const.armorSize; ++i)
+        for (i = 0; i < Const.SIZE_ARMOR; ++i)
         {
         	cx = 8;
-        	cy = 8 + i * Const.square;
+        	cy = 8 + i * Const.SQ;
             final int k = i;
  
             self.addSlot(new Slot(playerInventory,  ModConfig.sizeGrid - 1 - i, cx, cy)
@@ -270,10 +270,10 @@ public class InventoryBuilder
         InventoryBuilder.S_ARMOR_END = self.getSlotCount() - 1;
         
         InventoryBuilder.S_BAR_START = self.getSlotCount();
-        for (i = 0; i < Const.hotbarSize; ++i)
+        for (i = 0; i < Const.SIZE_HOTBAR; ++i)
         { 
-        	cx = 8 + i * Const.square;
-        	cy = 142 + (Const.square * ModConfig.MORE_ROWS);
+        	cx = 8 + i * Const.SQ;
+        	cy = 142 + (Const.SQ * ModConfig.moreRows);
  
         	self.addSlot(new Slot(playerInventory, i, cx, cy));
         }
@@ -281,14 +281,14 @@ public class InventoryBuilder
         
         
         InventoryBuilder.S_MAIN_START = self.getSlotCount();
-        int slotIndex = Const.hotbarSize;
+        int slotIndex = Const.SIZE_HOTBAR;
         
-        for( i = 0; i < ModConfig.ALL_ROWS; i++)
+        for( i = 0; i < ModConfig.allRows; i++)
 		{
-            for ( j = 0; j < ModConfig.ALL_COLS; ++j)
+            for ( j = 0; j < ModConfig.allCols; ++j)
             { 
-            	cx = 8 + j * Const.square;
-            	cy = 84 + i * Const.square;
+            	cx = 8 + j * Const.SQ;
+            	cy = 84 + i * Const.SQ;
             	self.addSlot(new Slot(playerInventory, slotIndex, cx, cy));
             	slotIndex++;
             }
@@ -446,7 +446,7 @@ public class InventoryBuilder
                     return null;
                 }
             }
-            else if (!self.mergeItemStack(stackOrig, Const.hotbarSize, ModConfig.sizeGrid + Const.hotbarSize, false)) // Full range
+            else if (!self.mergeItemStack(stackOrig, Const.SIZE_HOTBAR, ModConfig.sizeGrid + Const.SIZE_HOTBAR, false)) // Full range
             {
                 return null;
             }
@@ -499,7 +499,7 @@ public class InventoryBuilder
 	public static void onContainerClosed(EntityPlayer playerIn,	InventoryCrafting craftMatrix, IInventory craftResult)
 	{ 
 // we COULD not empty it BUT then it gets erased on logout, etc
-        for (int i = 0; i < Const.craftSize*Const.craftSize; ++i) // was 4
+        for (int i = 0; i < Const.SIZE_CRAFT*Const.SIZE_CRAFT; ++i) // was 4
         {
             ItemStack itemstack = craftMatrix.getStackInSlotOnClosing(i);
 

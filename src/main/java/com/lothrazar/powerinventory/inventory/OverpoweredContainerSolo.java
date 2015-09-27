@@ -30,12 +30,15 @@ import net.minecraft.util.IIcon;
 
 public class OverpoweredContainerSolo extends Container  implements IOverpoweredContainer//TODO
 { 
-	//@Override
+    public IInventory craftResult = new InventoryCraftResult();
+	private EntityPlayer thePlayer;
+	private InventoryCrafting craftMatrix;
+
 	public void addSlot(Slot s)
 	{
         super.addSlotToContainer(s);
 	}
-	//@Override
+
 	public int getSlotCount()
 	{
 		return inventorySlots.size();
@@ -52,19 +55,12 @@ public class OverpoweredContainerSolo extends Container  implements IOverpowered
 		return (Slot)this.inventorySlots.get(slotNumber);
 	}
 
-
-    public IInventory craftResult = new InventoryCraftResult();
-	
-	private EntityPlayer thePlayer;
-	private InventoryCrafting craftMatrix;
 	public OverpoweredContainerSolo(EntityPlayer player, InventoryPlayer playerInventory, OverpoweredInventorySolo inventoryCustom)
 	{
 		thePlayer = player;
-		inventorySlots = Lists.newArrayList();//undo everything done by super()
-		craftMatrix = new InventoryCrafting(this,  Const.craftSize,  Const.craftSize);
+		inventorySlots = Lists.newArrayList();
+		craftMatrix = new InventoryCrafting(this,  Const.SIZE_CRAFT,  Const.SIZE_CRAFT);
 		 
-
-
 		InventoryBuilder.setupContainer(this,thePlayer,playerInventory,craftMatrix,craftResult);
 
         this.onCraftMatrixChanged(this.craftMatrix);
@@ -93,121 +89,5 @@ public class OverpoweredContainerSolo extends Container  implements IOverpowered
 	public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber)
 	{ 
 		return InventoryBuilder.transferStackInSlot(this, p, slotNumber);
-		
-/*
-		//Thanks to coolAlias on the forums : 
-		//http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571051-custom-container-how-to-properly-override-shift
-		//above is from 2013 but still relevant
-        ItemStack stackCopy = null;
-        Slot slot = (Slot)this.inventorySlots.get(slotNumber);
-
-		if (slot != null && slot.getHasStack())
-        {
-            ItemStack stackOrig = slot.getStack();
-            stackCopy = stackOrig.copy();  if (slotNumber >= S_MAIN_START && slotNumber <= S_MAIN_END) // main inv grid
-            { 
-            	//only from here are we doing the special items
-            	
-            	if(stackCopy.getItem() == Items.ender_pearl && 
-            		(
-        			p.inventory.getStackInSlot(Const.enderPearlSlot) == null || 
-        			p.inventory.getStackInSlot(Const.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
-        			)
-        		{
-            		 
-            		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL+1, false))
-                	{ 
-                        return null;
-                    }  
-        		}
-            	else if(stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
-            		(
-        			p.inventory.getStackInSlot(Const.enderChestSlot) == null || 
-        			p.inventory.getStackInSlot(Const.enderChestSlot).stackSize < 1)
-        			)
-        		{ 
-            		if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST+1, false))
-                	{ 
-                        return null;
-                    }  
-        		}
-            	else if(stackCopy.getItem() == Items.compass && 
-            		(
-        			p.inventory.getStackInSlot(Const.compassSlot) == null || 
-        			p.inventory.getStackInSlot(Const.compassSlot).stackSize < 1)
-        			)
-        		{ 
-            		if (!this.mergeItemStack(stackOrig, S_COMPASS, S_COMPASS+1, false))
-                	{ 
-                        return null;
-                    }  
-        		}
-            	else if(stackCopy.getItem() == Items.clock && 
-            		(
-        			p.inventory.getStackInSlot(Const.clockSlot) == null || 
-        			p.inventory.getStackInSlot(Const.clockSlot).stackSize < 1)
-        			)
-        		{ 
-            		if (!this.mergeItemStack(stackOrig, S_CLOCK, S_CLOCK+1, false))
-                	{ 
-                        return null;
-                    }  
-        		}
-            	else if(stackCopy.getItem() == Items.glass_bottle )
-        		{ 
-            		if (!this.mergeItemStack(stackOrig, S_BOTTLE, S_BOTTLE+1, false))
-                	{ 
-                        return null;
-                    }  
-        		}
-            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END+1, false)            			)
-            	{
-            		
-                    return null;
-                }
-            }
-            else if (slotNumber >= S_BAR_START && slotNumber <= S_BAR_END) // Hotbar
-            { 
-            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
-            	{
-                    return null;
-                }
-            }
-            else if(slotNumber == S_PEARL || slotNumber == S_ECHEST  || slotNumber == S_COMPASS  || slotNumber == S_CLOCK || slotNumber == S_BOTTLE
-            		|| slotNumber == S_UNCRAFT)
-            { 
-            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
-            	{
-                    return null;
-                }
-            }
-            else if (!this.mergeItemStack(stackOrig, Const.hotbarSize, Const.INVOSIZE + Const.hotbarSize, false)) // Full range
-            {
-            	
-                return null;
-            }
-            if (stackOrig.stackSize == 0)
-            { 
-                slot.putStack((ItemStack)null);
-            }
-            else
-            {
-                slot.onSlotChanged();
-            }
-
-            if (stackOrig.stackSize == stackCopy.stackSize)
-            {
-                return null;
-            }
-
-            slot.onPickupFromSlot(p, stackOrig);
-        }
-
-        return stackCopy;
-        */
-	
-	} //end transfer function
-
-
-
+	}
 }

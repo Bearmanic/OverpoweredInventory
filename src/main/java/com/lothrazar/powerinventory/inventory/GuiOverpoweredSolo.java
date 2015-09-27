@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 {
-	ResourceLocation res = new ResourceLocation(Const.MODID, ModConfig.INVENTORY_TEXTURE);
+	ResourceLocation res = new ResourceLocation(Const.MODID, ModConfig.texturePlayerInventory);
 	private final OverpoweredInventorySolo inventory;
 	private final EntityPlayer thePlayer;
 	
@@ -55,7 +55,7 @@ public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 	{ 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModConfig.INVENTORY_TEXTURE));
+		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModConfig.textureSoloInventory));
 		
 		InventoryBuilder.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
 	}
@@ -103,5 +103,4 @@ public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 	{
 		return this.guiTop;
 	}
-
 }

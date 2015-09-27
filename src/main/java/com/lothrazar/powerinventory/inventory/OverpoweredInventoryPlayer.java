@@ -98,7 +98,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 	
 	public int getSlotsNotArmor()
 	{  
-		return this.getSizeInventory() - Const.armorSize; 
+		return this.getSizeInventory() - Const.SIZE_ARMOR; 
 	}
 	
     private int func_146029_c(Item stack)
@@ -409,8 +409,8 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 	@Override
     public void readFromNBT(NBTTagList tags)
     {
-        this.mainInventory = new ItemStack[ModConfig.sizeGrid + Const.hotbarSize];
-        this.armorInventory = new ItemStack[armorInventory == null? Const.armorSize : armorInventory.length]; // Just in case it isn't standard size
+        this.mainInventory = new ItemStack[ModConfig.sizeGrid + Const.SIZE_HOTBAR];
+        this.armorInventory = new ItemStack[armorInventory == null? Const.SIZE_ARMOR : armorInventory.length]; // Just in case it isn't standard size
         
         for (int i = 0; i < tags.tagCount(); ++i)
         {

@@ -68,7 +68,7 @@ public class OverpoweredContainerPlayer extends ContainerPlayer implements IOver
 		super(playerInventory, isLocal, player);
         this.thePlayer = player;
 		inventorySlots = Lists.newArrayList();//undo everything done by super()
-		craftMatrix = new InventoryCrafting(this, Const.craftSize,  Const.craftSize);
+		craftMatrix = new InventoryCrafting(this, Const.SIZE_CRAFT,  Const.SIZE_CRAFT);
  
  
         

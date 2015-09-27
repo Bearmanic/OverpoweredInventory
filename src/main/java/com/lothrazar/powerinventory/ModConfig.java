@@ -25,13 +25,14 @@ public class ModConfig
  
 	
 
-    public static String INVENTORY_TEXTURE = "textures/gui/inventory_gui.png";
+    public static String texturePlayerInventory;// = "textures/gui/inventory_gui.png";
+    public static String textureSoloInventory;
 	public static int texture_width = 464;
 	public static int texture_height = 382;
-	public static int MORE_ROWS;
-	public static int MORE_COLS;
-	public static int ALL_COLS;
-	public static int ALL_ROWS;
+	public static int moreRows;
+	public static int moreCols;
+	public static int allCols;
+	public static int allRows;
 	
 	//its used like this  new ItemStack[sizeGridHotbar];
 	
@@ -77,30 +78,32 @@ public class ModConfig
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
 
-			MORE_ROWS = 12;//texture 15x25
+			moreRows = 12;//texture 15x25
 		 
-			MORE_COLS = 16;
+			moreCols = 16;
 
 			texture_width = 464;
 			texture_height = 382;
-		    INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";//375 total
+		    texturePlayerInventory = "textures/gui/inventory_15x25.png";//375 total
+		    textureSoloInventory = "textures/gui/inventory_15x25_solo.png";
 		}	
 		else//assume its small
 		{
-			MORE_ROWS = 3;
+			moreRows = 3;
 		 
-			MORE_COLS = 9;
+			moreCols = 9;
 
 			texture_width = 338;
 			texture_height = 221;
-		    INVENTORY_TEXTURE = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
+		    texturePlayerInventory = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
+		    textureSoloInventory = "textures/gui/inventory_6x18_solo.png";
 		}
 
-		ALL_COLS = 9 + MORE_COLS;
-		ALL_ROWS = 3 + MORE_ROWS;
+		allCols = 9 + moreCols;
+		allRows = 3 + moreRows;
 		
-		sizeGrid  = ALL_COLS * ALL_ROWS;
-		sizeGridHotbar = sizeGrid + Const.hotbarSize; 
+		sizeGrid  = allCols * allRows;
+		sizeGridHotbar = sizeGrid + Const.SIZE_HOTBAR; 
 		sizeGridHotbarExtras = sizeGridHotbar + extras;
 		
 		/*System.out.println(" sizeGrid  = "+sizeGrid);
