@@ -1,26 +1,20 @@
 package com.lothrazar.powerinventory.network;
 
-import java.util.ArrayList;
-
 import com.lothrazar.powerinventory.*;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityChest;
 //import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class ExpButtonPacket implements IMessage , IMessageHandler<ExpButtonPacket, IMessage>
 {
 	public ExpButtonPacket() {}

@@ -1,32 +1,16 @@
 package com.lothrazar.powerinventory.inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.inventory.slot.SlotBottle;
-import com.lothrazar.powerinventory.inventory.slot.SlotClock;
-import com.lothrazar.powerinventory.inventory.slot.SlotCompass;
-import com.lothrazar.powerinventory.inventory.slot.SlotEnderChest;
-import com.lothrazar.powerinventory.inventory.slot.SlotEnderPearl;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.IIcon;
 
 public class OverpoweredContainerSolo extends Container  implements IOverpoweredContainer//TODO
 { 

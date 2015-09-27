@@ -6,9 +6,7 @@ import com.lothrazar.powerinventory.ModConfig;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
  
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;

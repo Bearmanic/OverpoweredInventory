@@ -1,7 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
 import com.lothrazar.powerinventory.network.ExpButtonPacket;
-import com.lothrazar.powerinventory.network.SortButtonPacket;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
@@ -9,9 +8,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class GuiButtonExp extends GuiButton 
 {  
     public GuiButtonExp(int buttonId, int x, int y, int w,int h,  String text)

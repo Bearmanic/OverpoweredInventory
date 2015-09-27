@@ -1,20 +1,14 @@
 package com.lothrazar.powerinventory.network;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import com.lothrazar.powerinventory.*;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPacket, IMessage>
 {
 	public SortButtonPacket() {}

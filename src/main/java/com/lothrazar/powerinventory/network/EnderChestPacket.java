@@ -1,15 +1,10 @@
 package com.lothrazar.powerinventory.network;
 
-import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.GuiHandler;
 import com.lothrazar.powerinventory.ModConfig;
-import com.lothrazar.powerinventory.ModInv;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

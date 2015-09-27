@@ -1,9 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.inventory.GuiOverpoweredPlayer;
-import com.lothrazar.powerinventory.network.EnderChestPacket;
 import com.lothrazar.powerinventory.network.SoloGuiPacket;
-import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
@@ -11,9 +8,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class GuiButtonSolo extends GuiButton 
 { 
     public GuiButtonSolo(int buttonId, int x, int y, int w,int h)

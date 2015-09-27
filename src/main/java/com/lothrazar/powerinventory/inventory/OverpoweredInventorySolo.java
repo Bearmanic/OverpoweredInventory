@@ -1,6 +1,5 @@
 package com.lothrazar.powerinventory.inventory;
 
-import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
 
 import net.minecraft.entity.player.EntityPlayer;
