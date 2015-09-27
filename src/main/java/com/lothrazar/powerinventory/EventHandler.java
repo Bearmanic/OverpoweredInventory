@@ -285,10 +285,10 @@ public class EventHandler
 			int xRight = Minecraft.getMinecraft().displayWidth/2 - size*2;
 			int yBottom = Minecraft.getMinecraft().displayHeight/2 - size*2;
 
-			if(player.inventory.getStackInSlot(Const.clockSlot) != null)
+			if(player.inventory.getStackInSlot(ModConfig.clockSlot) != null)
 				renderItemAt(new ItemStack(Items.clock),xLeft,yBottom,size);
 			
-			if(player.inventory.getStackInSlot(Const.compassSlot) != null)
+			if(player.inventory.getStackInSlot(ModConfig.compassSlot) != null)
 				renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);
  
 		}

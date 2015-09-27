@@ -24,8 +24,8 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 		super(player);
 		container = player.inventoryContainer instanceof OverpoweredContainerPlayer? (OverpoweredContainerPlayer)player.inventoryContainer : null;
 		inventory = container.invo;
-		this.xSize = Const.texture_width;
-		this.ySize = Const.texture_height;
+		this.xSize = ModConfig.texture_width;
+		this.ySize = ModConfig.texture_height;
 		thePlayer = player;
 	}
 
@@ -46,9 +46,9 @@ public class GuiOverpoweredPlayer extends GuiInventory implements IOverpoweredGu
 	{ 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModConfig.INVENTORY_TEXTURE));
 
-        InventoryBuilder.drawTexturedQuadFit(this.guiLeft(), this.guiTop(),Const.texture_width,Const.texture_height ,0);
+        InventoryBuilder.drawTexturedQuadFit(this.guiLeft(), this.guiTop(),ModConfig.texture_width,ModConfig.texture_height ,0);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	func_147046_a(this.guiLeft() + 51, this.guiTop() + 75, 30, (float)(this.guiLeft() + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);

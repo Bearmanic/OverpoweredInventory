@@ -21,9 +21,7 @@ import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPacket, IMessage>
 {
 	public UncButtonPacket() {}
@@ -100,7 +98,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		
-		ItemStack toUncraft = player.inventory.getStackInSlot(Const.uncraftSlot);
+		ItemStack toUncraft = player.inventory.getStackInSlot(ModConfig.uncraftSlot);
 		if(toUncraft == null){return null;}
 		
 		if(blacklist.contains(toUncraft.getItem())){return null;}
@@ -234,7 +232,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 			{
 				player.worldObj.spawnEntityInWorld(ei); 
 			}
-			player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
+			player.inventory.decrStackSize(ModConfig.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
 			 
 			player.playSound("random.break", 1.0F, 1.0F);//same sound as breaking a too
 		}

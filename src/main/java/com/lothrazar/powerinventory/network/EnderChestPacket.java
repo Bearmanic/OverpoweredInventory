@@ -2,6 +2,7 @@ package com.lothrazar.powerinventory.network;
 
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.GuiHandler;
+import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.ModInv;
 
 import io.netty.buffer.ByteBuf;
@@ -45,7 +46,7 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 		 
  		
-		if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
+		if( p.inventory.getStackInSlot(ModConfig.enderChestSlot) != null)
 			p.displayGUIChest(p.getInventoryEnderChest());
 		else 
 			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));

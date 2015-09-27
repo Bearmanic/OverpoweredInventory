@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.ModConfig;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -11,7 +12,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class OverpoweredInventorySolo implements IInventory, IOverpoweredInventory
 { 
-	ItemStack[] mainInventory = new ItemStack[Const.sizeGridHotbarExtras];
+	ItemStack[] mainInventory = new ItemStack[ModConfig.sizeGridHotbarExtras];
 //thanks for http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
 	private final String tagName = "opinvtags";
 	private final String tagSlot = "Slot";

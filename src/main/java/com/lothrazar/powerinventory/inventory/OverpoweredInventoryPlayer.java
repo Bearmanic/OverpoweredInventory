@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const; 
+import com.lothrazar.powerinventory.ModConfig;
 
 import java.util.concurrent.Callable;
 
@@ -34,7 +35,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 	{
 		super(player);
 		
-		this.mainInventory = new ItemStack[Const.sizeGridHotbarExtras];
+		this.mainInventory = new ItemStack[ModConfig.sizeGridHotbarExtras];
  
 		if(player.inventory != null)
 		{
@@ -71,7 +72,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
         
         if(index >= aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
 
-        if(index >= Const.sizeGridHotbar)
+        if(index >= ModConfig.sizeGridHotbar)
         {
         	if(aitemstack[index] != null)
         	{
@@ -122,15 +123,15 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 		}*/
 		//else
 		//{
-		if(slot >= Const.sizeGridHotbar)
-        {
-        	
-        	if( stack != null)
-        	{
-            	System.out.println("setInventorySlotContents "+ slot);
-        		System.out.println("    " + stack.getUnlocalizedName());
-        	}
-        }
+	
+		
+		if(slot >= this.mainInventory.length)
+		{
+        	System.out.println(">= length ?? setInventorySlotContents : "+ slot+ ">=" +  this.mainInventory.length);
+
+        	if(stack != null)System.out.println(stack.getUnlocalizedName());
+			
+		}
 			super.setInventorySlotContents(slot, stack);
 		//}
     }
@@ -613,7 +614,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 	@Override
     public void readFromNBT(NBTTagList tags)
     {
-        this.mainInventory = new ItemStack[Const.sizeGrid + Const.hotbarSize];
+        this.mainInventory = new ItemStack[ModConfig.sizeGrid + Const.hotbarSize];
         this.armorInventory = new ItemStack[armorInventory == null? Const.armorSize : armorInventory.length]; // Just in case it isn't standard size
         
         for (int i = 0; i < tags.tagCount(); ++i)

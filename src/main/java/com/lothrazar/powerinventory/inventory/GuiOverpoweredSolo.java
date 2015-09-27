@@ -3,6 +3,7 @@ package com.lothrazar.powerinventory.inventory;
 import org.lwjgl.opengl.GL11;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.ModConfig;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -14,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 {
-	ResourceLocation res = new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE);
+	ResourceLocation res = new ResourceLocation(Const.MODID, ModConfig.INVENTORY_TEXTURE);
 	private final OverpoweredInventorySolo inventory;
 	private final EntityPlayer thePlayer;
 	
@@ -24,8 +25,8 @@ public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 		inventory = inventoryCustom;
 		thePlayer = player;
 		
-		this.xSize = Const.texture_width;
-		this.ySize = Const.texture_height;
+		this.xSize = ModConfig.texture_width;
+		this.ySize = ModConfig.texture_height;
 	}
 	
 	@Override
@@ -54,7 +55,7 @@ public class GuiOverpoweredSolo extends GuiContainer implements IOverpoweredGui
 	{ 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
+		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModConfig.INVENTORY_TEXTURE));
 		
 		InventoryBuilder.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
 	}

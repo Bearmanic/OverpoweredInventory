@@ -46,7 +46,7 @@ public class InventoryBuilder
 	public static final int clockY = pearlY + 2*Const.square;
 	public static final int echestX = pearlX;
 	public static final int echestY = pearlY + 3*Const.square;
-	public static final int bottleX = Const.texture_width - Const.square - padding - 1;
+	public static final int bottleX = ModConfig.texture_width - Const.square - padding - 1;
 	public static final int bottleY = 20 + 2 * Const.square;
 	public static final int uncraftX = bottleX;
 	public static final int uncraftY = bottleY - 24;
@@ -74,7 +74,7 @@ public class InventoryBuilder
 	{
 		final int s = 16;
 
-		if(invo.getStack(Const.enderChestSlot) == null)
+		if(invo.getStack(ModConfig.enderChestSlot) == null)
 		{
 			self.btnEnder().enabled = false;
 			self.btnEnder().visible = false;
@@ -87,7 +87,7 @@ public class InventoryBuilder
 			self.btnEnder().visible = true;
 		}
 		
-		if(invo.getStack(Const.uncraftSlot) == null)
+		if(invo.getStack(ModConfig.uncraftSlot) == null)
 		{ 
 			self.btnUncraft().enabled = false;
 			self.btnUncraft().visible = false; 
@@ -98,8 +98,8 @@ public class InventoryBuilder
 			self.btnUncraft().visible = true;
 		}
 		
-		if(invo.getStack(Const.bottleSlot) == null || 
-		   invo.getStack(Const.bottleSlot).getItem() == Items.experience_bottle	)
+		if(invo.getStack(ModConfig.bottleSlot) == null || 
+		   invo.getStack(ModConfig.bottleSlot).getItem() == Items.experience_bottle	)
 		{
 			self.btnExp().enabled = false;
 			self.btnExp().visible = false;
@@ -112,17 +112,17 @@ public class InventoryBuilder
 			self.btnExp().visible = true;
 		}
 
-		if(invo.getStack(Const.enderPearlSlot) == null)
+		if(invo.getStack(ModConfig.enderPearlSlot) == null)
 		{  
 			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_enderpearl.png",InventoryBuilder.pearlX, InventoryBuilder.pearlY,s,s);
 		}
 
-		if(invo.getStack(Const.compassSlot) == null)
+		if(invo.getStack(ModConfig.compassSlot) == null)
 		{ 
 			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_compass.png",InventoryBuilder.compassX, InventoryBuilder.compassY,s,s);
 		}
 
-		if(invo.getStack(Const.clockSlot) == null)
+		if(invo.getStack(ModConfig.clockSlot) == null)
 		{  
 			InventoryBuilder.drawTextureSimple(tm,"textures/items/empty_clock.png",InventoryBuilder.clockX, InventoryBuilder.clockY,s,s);
 		}
@@ -146,12 +146,12 @@ public class InventoryBuilder
 		if(ModConfig.showMergeDeposit)
 		{
 			buttonList.add(new GuiButtonDump(button_id++,
-					self.guiLeft() + Const.texture_width - widthlrg - padding, 
+					self.guiLeft() + ModConfig.texture_width - widthlrg - padding, 
 					self.guiTop() + padding,
 					widthlrg,height));
 
 			buttonList.add(new GuiButtonFilter(button_id++,
-					self.guiLeft() + Const.texture_width - widthlrg - 2*padding - widthlrg, 
+					self.guiLeft() + ModConfig.texture_width - widthlrg - 2*padding - widthlrg, 
 					self.guiTop() + padding,
 					widthlrg,height));
 		}
@@ -187,8 +187,8 @@ public class InventoryBuilder
 		{  
 			width = 18;
 			int x_spacing = width + padding/2;
-			int x = self.guiLeft() + Const.texture_width - 5*x_spacing - padding+1;
-			int y = self.guiTop() + Const.texture_height - height - padding;
+			int x = self.guiLeft() + ModConfig.texture_width - 5*x_spacing - padding+1;
+			int y = self.guiTop() + ModConfig.texture_height - height - padding;
 			 
 			GuiButton btn;
 			 //was this.mc.thePlayer
@@ -249,7 +249,7 @@ public class InventoryBuilder
         	cy = 8 + i * Const.square;
             final int k = i;
  
-            self.addSlot(new Slot(playerInventory,  Const.sizeGrid - 1 - i, cx, cy)
+            self.addSlot(new Slot(playerInventory,  ModConfig.sizeGrid - 1 - i, cx, cy)
             { 
             	public int getSlotStackLimit()
 	            {
@@ -273,7 +273,7 @@ public class InventoryBuilder
         for (i = 0; i < Const.hotbarSize; ++i)
         { 
         	cx = 8 + i * Const.square;
-        	cy = 142 + (Const.square * Const.MORE_ROWS);
+        	cy = 142 + (Const.square * ModConfig.MORE_ROWS);
  
         	self.addSlot(new Slot(playerInventory, i, cx, cy));
         }
@@ -283,9 +283,9 @@ public class InventoryBuilder
         InventoryBuilder.S_MAIN_START = self.getSlotCount();
         int slotIndex = Const.hotbarSize;
         
-        for( i = 0; i < Const.ALL_ROWS; i++)
+        for( i = 0; i < ModConfig.ALL_ROWS; i++)
 		{
-            for ( j = 0; j < Const.ALL_COLS; ++j)
+            for ( j = 0; j < ModConfig.ALL_COLS; ++j)
             { 
             	cx = 8 + j * Const.square;
             	cy = 84 + i * Const.square;
@@ -297,22 +297,22 @@ public class InventoryBuilder
         
         
         InventoryBuilder.S_PEARL =  self.getSlotCount() ;
-        self.addSlot(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
+        self.addSlot(new SlotEnderPearl(playerInventory, ModConfig.enderPearlSlot, InventoryBuilder.pearlX, InventoryBuilder.pearlY));
 
         InventoryBuilder.S_ECHEST =  self.getSlotCount() ;
-        self.addSlot(new SlotEnderChest(playerInventory, Const.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
+        self.addSlot(new SlotEnderChest(playerInventory, ModConfig.enderChestSlot, InventoryBuilder.echestX, InventoryBuilder.echestY)); 
 
         InventoryBuilder.S_CLOCK =  self.getSlotCount();
-        self.addSlot(new SlotClock(playerInventory, Const.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
+        self.addSlot(new SlotClock(playerInventory, ModConfig.clockSlot, InventoryBuilder.clockX, InventoryBuilder.clockY)); 
 
         InventoryBuilder.S_COMPASS = self.getSlotCount() ;
-        self.addSlot(new SlotCompass(playerInventory, Const.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
+        self.addSlot(new SlotCompass(playerInventory, ModConfig.compassSlot, InventoryBuilder.compassX, InventoryBuilder.compassY)); 
         
         InventoryBuilder.S_BOTTLE = self.getSlotCount() ;
-        self.addSlot(new SlotBottle(playerInventory, Const.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
+        self.addSlot(new SlotBottle(playerInventory, ModConfig.bottleSlot, InventoryBuilder.bottleX, InventoryBuilder.bottleY)); 
         
         InventoryBuilder.S_UNCRAFT =self.getSlotCount() ;
-        self.addSlot(new Slot(playerInventory, Const.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
+        self.addSlot(new Slot(playerInventory, ModConfig.uncraftSlot, InventoryBuilder.uncraftX, InventoryBuilder.uncraftY)); 
 
         
 	}
@@ -374,8 +374,8 @@ public class InventoryBuilder
             	
             	if(stackCopy.getItem() == Items.ender_pearl && 
             		(
-        			p.inventory.getStackInSlot(Const.enderPearlSlot) == null || 
-        			p.inventory.getStackInSlot(Const.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
+        			p.inventory.getStackInSlot(ModConfig.enderPearlSlot) == null || 
+        			p.inventory.getStackInSlot(ModConfig.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
         			)
         		{
             		 
@@ -386,8 +386,8 @@ public class InventoryBuilder
         		}
             	else if(stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
             		(
-        			p.inventory.getStackInSlot(Const.enderChestSlot) == null || 
-        			p.inventory.getStackInSlot(Const.enderChestSlot).stackSize < 1)
+        			p.inventory.getStackInSlot(ModConfig.enderChestSlot) == null || 
+        			p.inventory.getStackInSlot(ModConfig.enderChestSlot).stackSize < 1)
         			)
         		{ 
             		if (!self.mergeItemStack(stackOrig, InventoryBuilder.S_ECHEST, InventoryBuilder.S_ECHEST+1, false))
@@ -397,8 +397,8 @@ public class InventoryBuilder
         		}
             	else if(stackCopy.getItem() == Items.compass && 
             		(
-        			p.inventory.getStackInSlot(Const.compassSlot) == null || 
-        			p.inventory.getStackInSlot(Const.compassSlot).stackSize < 1)
+        			p.inventory.getStackInSlot(ModConfig.compassSlot) == null || 
+        			p.inventory.getStackInSlot(ModConfig.compassSlot).stackSize < 1)
         			)
         		{ 
             		if (!self.mergeItemStack(stackOrig, InventoryBuilder.S_COMPASS, InventoryBuilder.S_COMPASS+1, false))
@@ -408,8 +408,8 @@ public class InventoryBuilder
         		}
             	else if(stackCopy.getItem() == Items.clock && 
             		(
-        			p.inventory.getStackInSlot(Const.clockSlot) == null || 
-        			p.inventory.getStackInSlot(Const.clockSlot).stackSize < 1)
+        			p.inventory.getStackInSlot(ModConfig.clockSlot) == null || 
+        			p.inventory.getStackInSlot(ModConfig.clockSlot).stackSize < 1)
         			)
         		{ 
             		if (!self.mergeItemStack(stackOrig, InventoryBuilder.S_CLOCK, InventoryBuilder.S_CLOCK+1, false))
@@ -446,7 +446,7 @@ public class InventoryBuilder
                     return null;
                 }
             }
-            else if (!self.mergeItemStack(stackOrig, Const.hotbarSize, Const.sizeGrid + Const.hotbarSize, false)) // Full range
+            else if (!self.mergeItemStack(stackOrig, Const.hotbarSize, ModConfig.sizeGrid + Const.hotbarSize, false)) // Full range
             {
                 return null;
             }
