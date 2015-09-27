@@ -83,7 +83,7 @@ public class ModConfig
 		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18");
 		 
 		
-		category = "Compatibility";
+		category = "z_compatibility";
 		
 		config.addCustomCategoryComment(category, "Only use this if your game is crashing due to other mods also trying to modify and/or replace the players default inventory at the same time.");
 		
