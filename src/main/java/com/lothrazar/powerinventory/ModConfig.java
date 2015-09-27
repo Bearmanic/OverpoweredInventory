@@ -14,6 +14,7 @@ public class ModConfig
 
 	public static boolean enableUncrafting; //TODO in config file default true
 	public static boolean enableEnchantBottling; //TODO in config file default false. 
+	//just remove the slots from the hard images, and draw dynamic with this.drawTexturedModalRect(
 	
 	public static boolean showSortButtons;
 	public static boolean showCornerButtons;

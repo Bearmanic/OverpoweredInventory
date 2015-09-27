@@ -63,7 +63,8 @@ public final OverpoweredInventorySolo inventory = new OverpoweredInventorySolo()
 	 */
 	public void onJoinWorld()
 	{
-		if(!(player.inventory instanceof OverpoweredInventoryPlayer))
+		if(ModConfig.enableCompatMode == false && //compatibility mode == do not override players stuff 
+				!(player.inventory instanceof OverpoweredInventoryPlayer))
 		{
 			player.inventory = new OverpoweredInventoryPlayer(player);
 			player.inventoryContainer = new OverpoweredContainerPlayer((OverpoweredInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
@@ -95,7 +96,8 @@ public final OverpoweredInventorySolo inventory = new OverpoweredInventorySolo()
 		this.inventory.readFromNBT(properties);
 		
 		
-		if(!(player.inventory instanceof OverpoweredInventoryPlayer))
+		if(ModConfig.enableCompatMode == false && //leave players stuff alone
+				!(player.inventory instanceof OverpoweredInventoryPlayer))
 		{
 			player.inventory = new OverpoweredInventoryPlayer(player);
 			player.inventoryContainer = new OverpoweredContainerPlayer((OverpoweredInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
@@ -122,6 +124,5 @@ public final OverpoweredInventorySolo inventory = new OverpoweredInventorySolo()
 	public void saveNBTData(NBTTagCompound properties) 
 	{
 		this.inventory.writeToNBT(properties);
-		
 	}
 }
