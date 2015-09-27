@@ -1,4 +1,6 @@
 package com.lothrazar.powerinventory;
+
+import net.minecraft.item.ItemStack;
  
 /** 
  * @author Sam Bassett aka Lothrazar
@@ -29,7 +31,16 @@ public class Const
 	public static int MORE_COLS;
 	public static int ALL_COLS;
 	public static int ALL_ROWS;
-	public static int INVOSIZE;
+	
+	//its used like this  new ItemStack[sizeGridHotbar];
+	
+	public static int sizeGrid;//size of the main inner rectangle
+	public static int sizeGridHotbar;//not armor
+	
+	//TODO is mainInventory arrays we want to contain the extars as well
+	public static int sizeGridHotbarExtras; //still without armor
+	
+	
 
 	//these are slot indices. different than slot numbers (important)
     public static final int enderPearlSlot = 77777; 
@@ -37,7 +48,8 @@ public class Const
     public static final int clockSlot = enderPearlSlot+2;
     public static final int compassSlot = enderPearlSlot+3;
     public static final int bottleSlot = enderPearlSlot+4;
-    public static final int uncraftSlot = enderPearlSlot+5;
+    public static final int uncraftSlot = enderPearlSlot+5;// six extra slots
+    public static final int extras = 6;
      
 	
 	public final static int SORT_LEFT = 1;

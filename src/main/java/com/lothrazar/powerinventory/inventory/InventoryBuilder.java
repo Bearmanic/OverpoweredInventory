@@ -249,7 +249,7 @@ public class InventoryBuilder
         	cy = 8 + i * Const.square;
             final int k = i;
  
-            self.addSlot(new Slot(playerInventory,  Const.INVOSIZE - 1 - i, cx, cy)
+            self.addSlot(new Slot(playerInventory,  Const.sizeGrid - 1 - i, cx, cy)
             { 
             	public int getSlotStackLimit()
 	            {
@@ -446,7 +446,7 @@ public class InventoryBuilder
                     return null;
                 }
             }
-            else if (!self.mergeItemStack(stackOrig, Const.hotbarSize, Const.INVOSIZE + Const.hotbarSize, false)) // Full range
+            else if (!self.mergeItemStack(stackOrig, Const.hotbarSize, Const.sizeGrid + Const.hotbarSize, false)) // Full range
             {
                 return null;
             }

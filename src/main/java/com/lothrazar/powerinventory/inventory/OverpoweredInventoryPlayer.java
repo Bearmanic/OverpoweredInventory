@@ -32,7 +32,7 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 	public OverpoweredInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
-		this.mainInventory = new ItemStack[Const.INVOSIZE + Const.hotbarSize];
+		this.mainInventory = new ItemStack[Const.sizeGridHotbar];
  
 		if(player.inventory != null)
 		{
@@ -591,8 +591,8 @@ public class OverpoweredInventoryPlayer extends InventoryPlayer implements IOver
 	@Override
     public void readFromNBT(NBTTagList tags)
     {
-        this.mainInventory = new ItemStack[MathHelper.clamp_int(Const.INVOSIZE, 27, Integer.MAX_VALUE - 100) + 9];
-        this.armorInventory = new ItemStack[armorInventory == null? 4 : armorInventory.length]; // Just in case it isn't standard size
+        this.mainInventory = new ItemStack[Const.sizeGrid + Const.hotbarSize];
+        this.armorInventory = new ItemStack[armorInventory == null? Const.armorSize : armorInventory.length]; // Just in case it isn't standard size
         
         for (int i = 0; i < tags.tagCount(); ++i)
         {

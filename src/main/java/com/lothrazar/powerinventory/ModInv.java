@@ -162,7 +162,11 @@ public class ModInv
 
 		Const.ALL_COLS = 9 + Const.MORE_COLS;
 		Const.ALL_ROWS = 3 + Const.MORE_ROWS;
-		Const.INVOSIZE  = Const.ALL_COLS * Const.ALL_ROWS;
+		
+		Const.sizeGrid  = Const.ALL_COLS * Const.ALL_ROWS;
+		Const.sizeGridHotbar = Const.sizeGrid + Const.hotbarSize; 
+		Const.sizeGridHotbarExtras = Const.sizeGridHotbar + Const.extras;
+		
 		if(config.hasChanged()){config.save();}
 	}
     

@@ -10,9 +10,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 
 public class OverpoweredInventorySolo implements IInventory, IOverpoweredInventory
-{
-	public static final int INV_SIZE = Const.INVOSIZE;
-	ItemStack[] inventory = new ItemStack[INV_SIZE];
+{ 
+	ItemStack[] mainInventory = new ItemStack[Const.sizeGridHotbar];
 //thanks for http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
 	private final String tagName = "opinvtags";
 	private final String tagSlot = "Slot";
@@ -20,14 +19,37 @@ public class OverpoweredInventorySolo implements IInventory, IOverpoweredInvento
 	@Override
 	public int getSizeInventory()
 	{
-
-		return INV_SIZE;
+		return mainInventory.length;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		return inventory[slot];
+		/*   
+		 //TODO: FIX just like O I Player
+		 ItemStack[] aitemstack = this.mainInventory;
+        //check these first, otherwise it crashes thinking they are armor
+        if(index == Const.enderPearlSlot){return enderPearlStack;}
+        if(index == Const.enderChestSlot){return enderChestStack;} 
+        if(index == Const.clockSlot){return clockStack;}
+        if(index == Const.compassSlot){return compassStack;} 
+        if(index == Const.bottleSlot){return bottleStack;} 
+        if(index == Const.uncraftSlot){return uncraftStack;} 
+        
+        if (index >= aitemstack.length)
+        {
+            index -= aitemstack.length;
+            aitemstack = this.armorInventory;
+        }
+        if(index>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
+
+        return aitemstack[index];*/
+		if(slot > mainInventory.length)
+		{
+			System.out.println("bad invo "+slot);
+			return null;
+		}
+		return mainInventory[slot];
 	}
 
 	@Override
@@ -80,7 +102,7 @@ public class OverpoweredInventorySolo implements IInventory, IOverpoweredInvento
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack itemstack)
 	{
-		this.inventory[slot] = itemstack;
+		this.mainInventory[slot] = itemstack;
 
 		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
 		{
