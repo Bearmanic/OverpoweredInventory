@@ -22,10 +22,12 @@ public class EventExtendedInventory {
     }
   }
   public static void syncItems(EntityPlayer player) {
-    int size = InventoryOverpowered.INV_SIZE;
-    for (int a = 0; a < size; a++) {
-      UtilPlayerInventoryFilestorage.getPlayerInventory(player).syncSlotToClients(a);
+    InventoryOverpowered invo = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
+    for (int a = 0; a < invo.getSizeInventory(); a++) {
+      invo.syncSlotToClients(a);
     }
+    invo.syncSlotToClients(Const.SLOT_ECHEST);
+    invo.syncSlotToClients(Const.SLOT_EPEARL);
   }
   @SubscribeEvent
   public void playerTick(PlayerEvent.LivingUpdateEvent event) {

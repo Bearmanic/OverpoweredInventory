@@ -64,7 +64,7 @@ public class PacketSyncExtendedInventory implements IMessage, IMessageHandler<Pa
         invo.inventory[message.slot] = message.bauble;
       }
       else {
-        ModInv.logger.error("INVALID slot " + message.slot + " __ " + message.bauble.getDisplayName());
+        ModInv.logger.error("INVALID slot " + message.slot + " __ " );
       }
     }
     return;
