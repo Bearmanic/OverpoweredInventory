@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 import java.lang.ref.WeakReference;
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.EventExtendedInventory;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.PacketSyncExtendedInventory;
 import com.lothrazar.powerinventory.config.ModConfig;
@@ -28,6 +29,8 @@ public class InventoryOverpowered implements IInventory {
     INV_SIZE = 2 * Const.HOTBAR_SIZE + Const.V_INVO_SIZE * ModConfig.getMaxSections();
     inventory = new ItemStack[INV_SIZE];
     this.player = new WeakReference<EntityPlayer>(player);
+
+//    EventExtendedInventory.syncItems(player);
   }
   @Override
   public int getSizeInventory() {
@@ -94,6 +97,7 @@ public class InventoryOverpowered implements IInventory {
     }
   }
   private void onInventoryChanged() {
+    System.out.println("onInventoryChanged");
     for (int i = 0; i < this.getSizeInventory(); ++i) {
       if (this.getStackInSlot(i) != null && this.getStackInSlot(i).stackSize == 0)
         this.setInventorySlotContents(i, null);
@@ -112,8 +116,8 @@ public class InventoryOverpowered implements IInventory {
       this.inventory[slot] = stack;
     if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
       stack.stackSize = this.getInventoryStackLimit();
-    }
-    syncSlotToClients(slot);
+    } 
+    this.syncSlotToClients(slot);
     this.onInventoryChanged();
   }
   @Override
@@ -193,9 +197,13 @@ public class InventoryOverpowered implements IInventory {
   }
   @Override
   public void openInventory(EntityPlayer player) {
+    ModInv.logger.info("on open");
+    EventExtendedInventory.syncItems(player);
   }
   @Override
   public void closeInventory(EntityPlayer player) {
+    ModInv.logger.info("on CLOSE");
+    EventExtendedInventory.syncItems(player);
   }
   @Override
   public int getField(int id) {
