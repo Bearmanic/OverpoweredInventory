@@ -17,6 +17,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
+import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
@@ -30,7 +31,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EventHandler {
+public class ModEvents {
   @SubscribeEvent
   public void onKeyInput(InputEvent.KeyInputEvent event) {
     if (ClientProxy.keyEnderpearl.isPressed()) {
@@ -74,14 +75,15 @@ public class EventHandler {
     Entity entityLiving = event.getEntity();
     if (ModConfig.persistUnlocksOnDeath == false &&
         entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
-      EntityPlayer p = (EntityPlayer) entityLiving;
-      IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
+      EntityPlayer player = (EntityPlayer) entityLiving;
+      IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
       // the vanilla inventory stuff (first hotbar) already drops  
-      for (int i = Const.HOTBAR_SIZE; i < prop.getItems().getSizeInventory(); ++i) {
-        prop.getItems().dropStackInSlot(p, i);
+      InventoryOverpowered invo = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
+      for (int i = Const.HOTBAR_SIZE; i < invo.getSizeInventory(); ++i) {
+        invo.dropStackInSlot(player, i);
       }
-      prop.getItems().dropStackInSlot(p, Const.SLOT_ECHEST);
-      prop.getItems().dropStackInSlot(p, Const.SLOT_EPEARL);
+      invo.dropStackInSlot(player, Const.SLOT_ECHEST);
+      invo.dropStackInSlot(player, Const.SLOT_EPEARL);
     }
   }
   @SideOnly(Side.CLIENT)

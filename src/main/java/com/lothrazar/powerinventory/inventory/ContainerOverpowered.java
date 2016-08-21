@@ -3,6 +3,7 @@ import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.InventoryRenderer;
+import com.lothrazar.powerinventory.UtilPlayerInventoryFilestorage;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.slot.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +40,13 @@ public class ContainerOverpowered extends Container {
   public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer) {
     thePlayer = player;
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
-    invo = prop.getItems();
+    invo = new InventoryOverpowered(player);
+    //prop.getItems();
+//TODO: CLENA UP THIS BAD PATTERN> make sync function?
+    invo.inventory = UtilPlayerInventoryFilestorage.getPlayerInventory(player).inventory;
+    invo.enderChestStack = UtilPlayerInventoryFilestorage.getPlayerInventory(player).enderChestStack;
+    invo.enderPearlStack = UtilPlayerInventoryFilestorage.getPlayerInventory(player).enderPearlStack;
+    
     int i, j, slotNum = 0, x = 0, y = 0;
     S_BAR_START = this.inventorySlots.size();
     for (i = 0; i < Const.HOTBAR_SIZE; ++i) {

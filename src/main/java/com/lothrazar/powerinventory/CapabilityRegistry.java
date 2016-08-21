@@ -20,12 +20,6 @@ public class CapabilityRegistry {
       return null;
     }
     IPlayerExtendedProperties props = player.getCapability(ModInv.CAPABILITYSTORAGE, null);
-    if (props.getItems() == null) {
-      InventoryOverpowered inv = new InventoryOverpowered(player);
-      ModInv.logger.error("Null INVO re-read nbt");
-      inv.readFromNBT(props.getDataAsNBT());
-      props.setItems(inv);
-    }
     return props;
   }
   public interface IPlayerExtendedProperties {
@@ -35,8 +29,6 @@ public class CapabilityRegistry {
     void setEChestUnlocked(boolean value);
     int getStorageCount();
     void setStorageCount(int value);
-    InventoryOverpowered getItems();
-    void setItems(InventoryOverpowered value);
     NBTTagCompound getDataAsNBT();
     void setDataFromNBT(NBTTagCompound nbt);
     //summary
@@ -105,14 +97,14 @@ public class CapabilityRegistry {
     public boolean hasStorage(int k) {
       return this.getStorageCount() >= k;
     }
-    @Override
-    public InventoryOverpowered getItems() {
-      return invo;
-    }
-    @Override
-    public void setItems(InventoryOverpowered value) {
-      invo = value;
-    }
+//    @Override
+//    public InventoryOverpowered getItems() {
+//      return invo;
+//    }
+//    @Override
+//    public void setItems(InventoryOverpowered value) {
+//      invo = value;
+//    }
   }
   public static class Storage implements IStorage<IPlayerExtendedProperties> {
     @Override

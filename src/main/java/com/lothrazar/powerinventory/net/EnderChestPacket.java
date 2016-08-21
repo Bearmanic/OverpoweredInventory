@@ -2,6 +2,8 @@ package com.lothrazar.powerinventory.net;
 import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.UtilPlayerInventoryFilestorage;
+import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,13 +31,15 @@ public class EnderChestPacket implements IMessage, IMessageHandler<EnderChestPac
   }
   @Override
   public IMessage onMessage(EnderChestPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
-    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-    ItemStack chest = prop.getItems().getStackInSlot(Const.SLOT_ECHEST);
+    EntityPlayer player = ctx.getServerHandler().playerEntity;
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
+
+    InventoryOverpowered invo = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
+    ItemStack chest = invo.getStackInSlot(Const.SLOT_ECHEST);
     if (chest != null)
-      p.displayGUIChest(p.getInventoryEnderChest());
+      player.displayGUIChest(player.getInventoryEnderChest());
     else
-      ModInv.addChatMessage(p, "slot.enderchest");
+      ModInv.addChatMessage(player, "slot.enderchest");
     return null;
   }
 }

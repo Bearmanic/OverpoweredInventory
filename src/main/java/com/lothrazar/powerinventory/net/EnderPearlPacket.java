@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.net;
 import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,17 +31,19 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
   }
   @Override
   public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
-    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-    ItemStack pearls = prop.getItems().getStackInSlot(Const.SLOT_EPEARL);
+    EntityPlayer player = ctx.getServerHandler().playerEntity;
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
+
+    InventoryOverpowered invo = UtilPlayerInventoryFilestorage.getPlayerInventory(player);
+    ItemStack pearls = invo.getStackInSlot(Const.SLOT_EPEARL);
     if (pearls != null) {
-      World world = p.worldObj;
-      EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, p);
-      entityenderpearl.setHeadingFromThrower(p, p.rotationPitch, p.rotationYaw, 0.0F, 1.5F, 1.0F);
+      World world = player.worldObj;
+      EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, player);
+      entityenderpearl.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
       world.spawnEntityInWorld(entityenderpearl);
-      ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
-      if (p.capabilities.isCreativeMode == false) {
-        prop.getItems().decrStackSize(Const.SLOT_EPEARL, 1);
+      ModInv.playSound(player, SoundEvents.ENTITY_ARROW_SHOOT);
+      if (player.capabilities.isCreativeMode == false) {
+        invo.decrStackSize(Const.SLOT_EPEARL, 1);
       }
     }
     return null;

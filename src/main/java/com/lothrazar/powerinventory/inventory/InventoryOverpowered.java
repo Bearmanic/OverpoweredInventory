@@ -1,5 +1,8 @@
 package com.lothrazar.powerinventory.inventory;
+import java.lang.ref.WeakReference;
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.PacketSyncExtendedInventory;
 import com.lothrazar.powerinventory.config.ModConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -11,18 +14,20 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryOverpowered implements IInventory {
   public static int INV_SIZE;
-  private ItemStack[] inventory;
+  public ItemStack[] inventory;
   // thanks for
   // http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
   private final String tagName = "opinvtags";
   private final String tagSlot = "Slot";
-  private ItemStack enderPearlStack;
-  private ItemStack enderChestStack;
+  public ItemStack enderPearlStack;
+  public ItemStack enderChestStack;
+  public WeakReference<EntityPlayer> player;
   public InventoryOverpowered(EntityPlayer player) {
     // always 2 hotbars. the number of sections depends on config (ignoring
     // locked or not per player)
     INV_SIZE = 2 * Const.HOTBAR_SIZE + Const.V_INVO_SIZE * ModConfig.getMaxSections();
     inventory = new ItemStack[INV_SIZE];
+    this.player = new WeakReference<EntityPlayer>(player);
   }
   @Override
   public int getSizeInventory() {
@@ -108,6 +113,7 @@ public class InventoryOverpowered implements IInventory {
     if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
       stack.stackSize = this.getInventoryStackLimit();
     }
+    syncSlotToClients(slot);
     this.onInventoryChanged();
   }
   @Override
@@ -149,7 +155,16 @@ public class InventoryOverpowered implements IInventory {
       nbttaglist.appendTag(tagcompound);
     }
     tags.setTag(tagName, nbttaglist);
-  }
+  }  
+//  public void saveNBT(EntityPlayer player) {
+//    NBTTagCompound tags = player.getEntityData();
+//    writeToNBT(tags);
+//  }
+
+//  public void readNBT(EntityPlayer player) {
+//    NBTTagCompound tags = player.getEntityData();
+//    readFromNBT(tags);
+//  }
   public void readFromNBT(NBTTagCompound tagcompound) {
     NBTTagList nbttaglist = tagcompound.getTagList(tagName, Constants.NBT.TAG_COMPOUND);
     ItemStack itemstack;
@@ -170,6 +185,8 @@ public class InventoryOverpowered implements IInventory {
       }
     }
   }
+
+
   @Override
   public boolean hasCustomName() {
     return false;
@@ -209,7 +226,17 @@ public class InventoryOverpowered implements IInventory {
   }
   @Override
   public ITextComponent getDisplayName() {
-    // TODO Auto-generated method stub
     return null;
+  }
+  public void syncSlotToClients(int slot) {
+    System.out.println("SYNC SLOT " +slot);
+    try {
+      if (ModInv.proxy.getClientWorld() == null) {
+        ModInv.instance.network.sendToAll(new PacketSyncExtendedInventory(player.get(), slot));
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
