@@ -21,7 +21,10 @@ public class CapabilityRegistry {
     }
     IPlayerExtendedProperties props = player.getCapability(ModInv.CAPABILITYSTORAGE, null);
     if (props.getItems() == null) {
-      props.setItems(new InventoryOverpowered(player));
+      InventoryOverpowered inv = new InventoryOverpowered(player);
+      ModInv.logger.error("Null INVO re-read nbt");
+      inv.readFromNBT(props.getDataAsNBT());
+      props.setItems(inv);
     }
     return props;
   }
