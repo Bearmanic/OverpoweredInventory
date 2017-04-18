@@ -29,19 +29,19 @@ public class CapabilityRegistry {
     int getStorageCount();
     void setStorageCount(int value);
     NBTTagCompound getDataAsNBT();
-    void setDataFromNBT(NBTTagCompound nbt);
+    void setDataFromNBT(NBTTagCompound nbt); 
     //summary
     boolean hasStorage(int k);
   }
   public static class InstancePlayerExtendedProperties implements IPlayerExtendedProperties {
     private boolean hasEPearl = false;
-    private boolean hasEChest = false;
+    private boolean hasEChest = false; 
     private int storageCount = 20;
     @Override
     public NBTTagCompound getDataAsNBT() {
       NBTTagCompound tags = new NBTTagCompound();
       tags.setByte("isEPearlUnlocked", (byte) (this.isEPearlUnlocked() ? 1 : 0));
-      tags.setByte("isEChestUnlocked", (byte) (this.isEChestUnlocked() ? 1 : 0));
+      tags.setByte("isEChestUnlocked", (byte) (this.isEChestUnlocked() ? 1 : 0)); 
       tags.setInteger("getStorageCount", this.getStorageCount());
       return tags;
     }
@@ -55,7 +55,7 @@ public class CapabilityRegistry {
         tags = (NBTTagCompound) nbt;
       }
       this.setEPearlUnlocked(tags.getByte("isEPearlUnlocked") == 1);
-      this.setEChestUnlocked(tags.getByte("isEChestUnlocked") == 1);
+      this.setEChestUnlocked(tags.getByte("isEChestUnlocked") == 1); 
       this.setStorageCount(tags.getInteger("getStorageCount"));
     }
     @Override

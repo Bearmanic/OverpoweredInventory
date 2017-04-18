@@ -100,10 +100,11 @@ public class EventHandler {
       //align t top right
       x = screenWidth / 2 + Const.VWIDTH / 2 - GuiButtonOpenInventory.width - 1;
       y = screenHeight / 2 - Const.VHEIGHT / 2 - GuiButtonOpenInventory.height + 1;
-      boolean hasPotions = Minecraft.getMinecraft().player.getActivePotionEffects().size() > 0;
-      if (hasPotions) {
-        x += 60;
-      }
+      //TODO : POINTPOIN CONFIGGGGGG
+//      boolean hasPotions = Minecraft.getMinecraft().player.getActivePotionEffects().size() > 0;
+//      if (hasPotions) {
+//        x += 60;
+//      }
       //this is the tab button
       event.getButtonList().add(new GuiButtonOpenInventory(button_id++, x, y));
     }

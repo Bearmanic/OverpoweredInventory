@@ -39,7 +39,18 @@ public class ContainerOverpowered extends Container {
   private final EntityPlayer thePlayer;
   public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer) {
     thePlayer = player;
+    
+
+    int i, j, slotNum = 0, x = 0, y = 0;
+
+    int xStart;// = 2*pad;
+    int yStart;// = 13+Const.SQ;//leaving one space for the slots on top row
+
+    
+    
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
+    
+   
     //    invo = prop.getItems();
     invo = new InventoryOverpowered(player);
     //    invo.setEventHandler(this);
@@ -47,7 +58,6 @@ public class ContainerOverpowered extends Container {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(invo, player);
       //      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
     }
-    int i, j, slotNum = 0, x = 0, y = 0;
     S_BAR_START = this.inventorySlots.size();
     for (i = 0; i < Const.HOTBAR_SIZE; ++i) {
       x = hotbarX + i * Const.SQ;
@@ -55,6 +65,32 @@ public class ContainerOverpowered extends Container {
       this.addSlotToContainer(new Slot(inventoryPlayer, slotNum, x, hotbarY));
     }
     S_BAR_END = this.inventorySlots.size() - 1;
+    
+    
+    
+    
+    //player invo HAS to be injected here, righ?
+
+    
+    // players inventory
+ 
+    xStart = InventoryRenderer.xPosSlotsStart(1);
+    yStart = InventoryRenderer.yPosSlotsStart(1);
+ 
+    // start the players inventory
+    for (int l = 0; l < 3; ++l) {
+      for (int k = 0; k < 9; ++k) {
+        x = xStart + k * Const.SQ;
+        y = yStart + l * Const.SQ;
+        slotNum = k + l * 9 + 9;
+        this.addSlotToContainer(new Slot(inventoryPlayer, slotNum, x, y));
+      }
+    }
+ 
+    
+    
+    
+    
     S_BAROTHER_START = this.inventorySlots.size();
     for (i = Const.HOTBAR_SIZE; i < 2 * Const.HOTBAR_SIZE; ++i) {
       x = hotbarX + i * Const.SQ + pad;
@@ -70,14 +106,16 @@ public class ContainerOverpowered extends Container {
       S_ECHEST = this.inventorySlots.size();
       this.addSlotToContainer(new SlotEnderChest(invo, Const.SLOT_ECHEST));
     }
+    
+    
+    
+    //now the inventory sections start ere
     S_MAIN_START = this.inventorySlots.size();
-    // TOP LEFT: the player inventory mirror
-    int xStart;// = 2*pad;
-    int yStart;// = 13+Const.SQ;//leaving one space for the slots on top row
+   
     for (int k = 1; k <= ModConfig.getMaxSections(); k++) {
       if (prop.hasStorage(k)) {
-        xStart = InventoryRenderer.xPosSlotsStart(k);
-        yStart = InventoryRenderer.yPosSlotsStart(k);
+        xStart = InventoryRenderer.xPosSlotsStart(k+1);
+        yStart = InventoryRenderer.yPosSlotsStart(k+1);
         for (i = 0; i < Const.ROWS_VANILLA; ++i) {
           for (j = 0; j < Const.COLS_VANILLA; ++j) {
             slotNum = (k - 1) * Const.V_INVO_SIZE + j + (i + 1 + 1) * (Const.HOTBAR_SIZE);
@@ -89,6 +127,11 @@ public class ContainerOverpowered extends Container {
       }
     }
     S_MAIN_END = this.inventorySlots.size() - 1;
+
+    
+    
+   
+    
   }
   @Override
   public void onContainerClosed(EntityPlayer playerIn) {

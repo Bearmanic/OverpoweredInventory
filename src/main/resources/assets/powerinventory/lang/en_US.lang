@@ -13,3 +13,4 @@ button.deposit=Deposit
 button.filter=Filter
 button.sort=Sort
 key.categories.overpoweredinventory=Overpowered Inventory
+gui.craftexp=Not Enough Experience

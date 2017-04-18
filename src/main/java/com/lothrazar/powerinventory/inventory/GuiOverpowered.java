@@ -40,6 +40,7 @@ public class GuiOverpowered extends GuiContainer {
   public void initGui() {
     super.initGui();
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
+ 
     int h = 20;
     int w = 20;// default button dims
     int button_id = 99;
@@ -77,9 +78,10 @@ public class GuiOverpowered extends GuiContainer {
     int expCost = ModConfig.expCostStorage_start;
     for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
       if (prop.hasStorage(i) == false) {
+    
         GuiButtonUnlockStorage b = new GuiButtonUnlockStorage(button_id++,
-            this.guiLeft + InventoryRenderer.xPosBtn(i),
-            this.guiTop + InventoryRenderer.yPosBtn(i), thePlayer, expCost, i);
+            this.guiLeft + InventoryRenderer.xPosBtn(i+1),
+            this.guiTop + InventoryRenderer.yPosBtn(i+1), thePlayer, expCost, i);
         this.buttonList.add(b);
         break;
       }
@@ -88,11 +90,13 @@ public class GuiOverpowered extends GuiContainer {
     w = 6;
     h = 8;
     for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
-      if (prop.hasStorage(i))
+      if (prop.hasStorage(i)){
+        
         this.buttonList.add(new GuiButtonRotate(button_id++,
-            this.guiLeft + InventoryRenderer.xPosSwap(i),
-            this.guiTop + InventoryRenderer.yPosSwap(i),
+            this.guiLeft + InventoryRenderer.xPosSwap(i+1),
+            this.guiTop + InventoryRenderer.yPosSwap(i+1),
             w, h, "", i));
+      }
     }
   }
   @Override
@@ -137,10 +141,15 @@ public class GuiOverpowered extends GuiContainer {
       UtilTextureRender.drawTextureSimple(bkg_large, this.guiLeft, this.guiTop, this.xSize, this.ySize);
     else
       UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop, this.xSize, this.ySize);
+    
+    //draw one for player invo
+
+    drawSlotSectionAt(this.guiLeft + InventoryRenderer.xPosTexture(1), this.guiTop + InventoryRenderer.yPosTexture(1));
+    
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
     for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
       if (prop.hasStorage(i))
-        drawSlotSectionAt(this.guiLeft + InventoryRenderer.xPosTexture(i), this.guiTop + InventoryRenderer.yPosTexture(i));
+        drawSlotSectionAt(this.guiLeft + InventoryRenderer.xPosTexture(i+1), this.guiTop + InventoryRenderer.yPosTexture(i+1));
     }
     if (prop.isEChestUnlocked()) {
       drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);
