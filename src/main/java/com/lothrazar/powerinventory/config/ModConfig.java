@@ -7,6 +7,7 @@ public class ModConfig {
   public static int expCostPearl;
   public static int expCostEChest;
   public static Configuration config;
+  public static boolean shiftWhenPotionsOn = false;
   public static boolean persistUnlocksOnDeath = true;
   public static boolean showGuiButton = true;
   public static final String categoryHighlander = "overpowered_inventory";
@@ -40,6 +41,9 @@ public class ModConfig {
     ModConfig.expCostStorage_inc = config.getInt("exp_cost_storage_increment", categoryHighlander, 100, 1, 9999, "Increment of experience points needed to unlock each successive storage area (adds up each time)");
     ModConfig.showGuiButton = config.getBoolean("show_gui_button", categoryHighlander, true, "Show the tab button in the player GUI upper right.  If disabled, the button is hidden but you can still use the keybinding.");
     ModConfig.persistUnlocksOnDeath = config.getBoolean("persist_unlocks_death", categoryHighlander, true, "Inventory contents persist through death.  Also, all EXP unlocks such as crafting slots will be saved and remembered through death.  If this is false, all unlocks reset on death and become locked (modpack makers: feel free to reduce costs if you set this false)");
+    ModConfig.shiftWhenPotionsOn = config.getBoolean("shift_button_potions", categoryHighlander, false, "If true, this will shift the inventory button to the right to compensate for when potions are on the player.");
+    
+    
     category = "resolution_size_setting";
     config.addCustomCategoryComment(category, "The small size is for use with smaller screen resolutions, or with GUI Scale Small or Auto.  For GUI Scale Normal and above, the large setting should work fine." + "  WARNING: empty your inventory before you change this from large to small");
     ModConfig.isLarge = config.getBoolean("is_large", category, true, "Large is the default size.  Or you can change this to false for the small version (which still has six extra 3x9 inventory sections)");
