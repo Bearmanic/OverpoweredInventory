@@ -10,10 +10,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonRotate extends GuiButton implements IGuiTooltip {
   private int invoGroup;
   private String tooltip;
-  public GuiButtonRotate(int buttonId, int x, int y, int width, int height, String lbl, int ig) {
-    super(buttonId, x, y, width, height, lbl);// ig for test
+  public GuiButtonRotate(int buttonId, int x, int y, int ig) {
+    super(buttonId, x, y, 8, 20, ""+ig);// ig for test
     invoGroup = ig;
-    this.setTooltip(ModInv.lang("tooltip.swap"));
+    this.setTooltip(ModInv.lang("tooltip.swap") +" ["+ invoGroup+"]");
   }
   @SideOnly(Side.CLIENT)
   @Override

@@ -95,9 +95,20 @@ public class GuiOverpowered extends GuiContainer {
         this.buttonList.add(new GuiButtonRotate(button_id++,
             this.guiLeft + InventoryRenderer.xPosSwap(i+1),
             this.guiTop + InventoryRenderer.yPosSwap(i+1),
-            w, h, "", i));
+             i));
       }
     }
+    
+    int endSlate = ModConfig.getMaxSections()+2;
+int xPagin=InventoryRenderer.xPosSwap(endSlate)+20;
+int yPagin=InventoryRenderer.yPosSwap(endSlate)+20;
+//todo: paging buttons. move things up down left right etc. no maximum??
+    this.buttonList.add(new GuiButton(button_id++,
+        this.guiLeft + xPagin,
+        this.guiTop + yPagin,
+        w, h, "!"));
+    
+    
   }
   @Override
   public void drawScreen(int x, int y, float par3) {

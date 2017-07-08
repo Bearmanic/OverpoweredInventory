@@ -25,7 +25,7 @@ public class ModConfig {
     return TEXTURE_HEIGHT;
   }
   public static int getMaxSections() {
-    return (isLarge) ? 15 : 6;
+    return ((isLarge) ? 15 : 6)-2;//-1 for player inventory, -1 for pagin buttons
   }
   public static void loadConfig(Configuration c) {
     config = c;
